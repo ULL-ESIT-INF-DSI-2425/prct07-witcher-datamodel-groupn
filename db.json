@@ -1,14 +1,6 @@
 {
   "bienes": [
     {
-      "id": 1,
-      "nombre": "1",
-      "descripcion": "1",
-      "material": "1",
-      "peso": 1,
-      "valor": 1
-    },
-    {
       "id": 2,
       "nombre": "2",
       "descripcion": "2",

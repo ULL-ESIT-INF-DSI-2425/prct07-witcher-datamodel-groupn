@@ -93,4 +93,68 @@ export class Inventario {
         //if(db.data?.bienes)
 
     //}
+
+    removeBien(id: number) {
+        db.read();
+    
+        if (!db.data || !db.data.bienes) {
+            console.log("No hay bienes en la base de datos.");
+            return;
+        }
+    
+        const index = db.data.bienes.findIndex((b: Bien) => b.id === id);
+    
+        if (index === -1) {
+            console.log("El bien con ese ID no existe.");
+            return;
+        }
+    
+        db.data.bienes.splice(index, 1);
+        db.write();
+    
+        console.log(`Bien con ID ${id} ha sido eliminado correctamente.`);
+    }
+
+    removeMercader(id: number) {
+        db.read();
+    
+        if (!db.data || !db.data.mercaderes) {
+            console.log("No hay mercaderes en la base de datos.");
+            return;
+        }
+    
+        const index = db.data.mercaderes.findIndex((m: Mercader) => m.id === id);
+    
+        if (index === -1) {
+            console.log("El mercader con ese ID no existe.");
+            return;
+        }
+    
+        db.data.mercaderes.splice(index, 1);
+        db.write();
+    
+        console.log(`Mercader con ID ${id} ha sido eliminado correctamente.`);
+    }
+
+    removeCliente(id: number) {
+        db.read();
+    
+        if (!db.data || !db.data.clientes) {
+            console.log("No hay clientes en la base de datos.");
+            return;
+        }
+    
+        const index = db.data.clientes.findIndex((c: Cliente) => c.id === id);
+    
+        if (index === -1) {
+            console.log("El cliente con ese ID no existe.");
+            return;
+        }
+    
+        db.data.clientes.splice(index, 1);
+        db.write();
+    
+        console.log(`Cliente con ID ${id} ha sido eliminado correctamente.`);
+    }
+    
 }

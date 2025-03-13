@@ -42,7 +42,7 @@ async function gestionarBienes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Bien', 'Consultar Bienes', 'Main Menu', 'Salir'],
+                choices: ['Añadir Bien', 'Consultar Bienes', 'Eliminar Bienes','Main Menu', 'Salir'],
             },
         ]);
 
@@ -52,6 +52,9 @@ async function gestionarBienes(){
                 break;
             case 'Consultar Bienes':
                 await console.log(inventario.getBienes());
+                break;
+            case 'Eliminar Bienes':
+                await removeBien();
                 break;
             case 'Main Menu':
                 await main();
@@ -111,6 +114,22 @@ async function addBien(){
     inventario.addBien(bien);
 }
 
+async function removeBien() {
+    const { id } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Ingrese el ID del bien a eliminar:',
+            validate: (input) => isNaN(Number(input)) ? "Debe ingresar un número válido." : true
+        },
+    ]);
+
+    const bienId = Number(id);
+
+    inventario.removeBien(bienId);
+}
+
+
 async function gestionarMercaderes(){
     while (true) {
         const { opcion } = await inquirer.prompt([
@@ -118,7 +137,7 @@ async function gestionarMercaderes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Mercader', 'Consultar Mercaderes', 'Main Menu', 'Salir'],
+                choices: ['Añadir Mercader', 'Consultar Mercaderes', 'Eliminar Mercaderes', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -128,6 +147,9 @@ async function gestionarMercaderes(){
                 break;
             case 'Consultar Mercaderes':
                 await console.log(inventario.getMercaderes());
+                break;
+            case 'Eliminar Mercaderes':
+                await removeMercader();
                 break;
             case 'Main Menu':
                 await main();
@@ -175,6 +197,21 @@ async function addMercader(){
     inventario.addMercader(mercader);
 }
 
+async function removeMercader() {
+    const { id } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Ingrese el ID del mercader a eliminar:',
+            validate: (input) => isNaN(Number(input)) ? "Debe ingresar un número válido." : true
+        },
+    ]);
+
+    const mercaderId = Number(id);
+
+    inventario.removeBien(mercaderId);
+}
+
 
 async function gestionarClientes(){
     while (true) {
@@ -183,7 +220,7 @@ async function gestionarClientes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Cliente', 'Consultar Clientes', 'Main Menu', 'Salir'],
+                choices: ['Añadir Cliente', 'Consultar Clientes','Eliminar Clientes', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -193,6 +230,9 @@ async function gestionarClientes(){
                 break;
             case 'Consultar Clientes':
                 await console.log(inventario.getClientes());
+                break;
+            case 'Eliminar Clientes':
+                await removeCliente();
                 break;
             case 'Main Menu':
                 await main();
@@ -240,5 +280,19 @@ async function addCliente(){
     inventario.addCliente(cliente);
 }
 
+async function removeCliente() {
+    const { id } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Ingrese el ID del cliente a eliminar:',
+            validate: (input) => isNaN(Number(input)) ? "Debe ingresar un número válido." : true
+        },
+    ]);
+
+    const clienteId = Number(id);
+
+    inventario.removeBien(clienteId);
+}
 
 main();
