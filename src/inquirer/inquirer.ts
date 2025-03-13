@@ -209,7 +209,7 @@ async function removeMercader() {
 
     const mercaderId = Number(id);
 
-    inventario.removeBien(mercaderId);
+    inventario.removeMercader(mercaderId);
 }
 
 
@@ -292,7 +292,7 @@ async function removeCliente() {
 
     const clienteId = Number(id);
 
-    inventario.removeBien(clienteId);
+    inventario.removeCliente(clienteId);
 }
 
 main();
