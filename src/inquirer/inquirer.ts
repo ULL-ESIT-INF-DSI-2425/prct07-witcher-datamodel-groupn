@@ -1,6 +1,8 @@
 import inquirer from "inquirer"
 import { Inventario } from "../inventario/inventario.js";
 import { Bien } from "../elements/Bien.js";
+import { Mercader } from "../elements/Mercader.js";
+import { Cliente } from "../elements/Cliente.js";
 import { addAbortListener } from "events";
 
 let inventario = new Inventario();
@@ -21,13 +23,13 @@ export async function main() {
                 await gestionarBienes();
                 break;
             case 'Gestionar Mercaderes':
-
+                await gestionarMercaderes();
                 break;
             case 'Gestionar Clientes':
-
+                await gestionarClientes();
                 break;
             case 'Salir':
-                return;
+                process.exit(0);
                 break;
         }
     }
@@ -40,7 +42,7 @@ async function gestionarBienes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Bien', 'Consultar Bienes', 'Main Menu'],
+                choices: ['Añadir Bien', 'Consultar Bienes', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -52,10 +54,10 @@ async function gestionarBienes(){
                 await console.log(inventario.getBienes());
                 break;
             case 'Main Menu':
-
+                await main();
                 break;
             case 'Salir':
-                return;
+                process.exit(0);
                 break;
         }
 
@@ -70,6 +72,10 @@ async function addBien(){
             type: 'input',
             name: 'id',
             message: 'Ingrese el ID:',
+            //validate: (input: string) => {
+            //    return !isNaN(parseInt(input)) || "No es numero";
+            //},
+            filter: (input: string) => parseInt(input)
         },
         {
             type: 'input',
@@ -90,11 +96,13 @@ async function addBien(){
             type: 'input',
             name: 'peso',
             message: 'Ingrese el peso:',
+            filter: (input: string) => parseInt(input)
         }, 
         {
             type: 'input',
             name: 'valor',
             message: 'Ingrese el valor:',
+            filter: (input: string) => parseInt(input)
         }, 
     ]);
 
@@ -102,5 +110,135 @@ async function addBien(){
     const bien = new Bien(id, nombre, descripcion, material, peso, valor);
     inventario.addBien(bien);
 }
+
+async function gestionarMercaderes(){
+    while (true) {
+        const { opcion } = await inquirer.prompt([
+            {
+                type: 'list', 
+                name: 'opcion',
+                message: 'Seleccione una opcion: ',
+                choices: ['Añadir Mercader', 'Consultar Mercaderes', 'Main Menu', 'Salir'],
+            },
+        ]);
+
+        switch(opcion) {
+            case 'Añadir Mercader':
+                await addMercader();
+                break;
+            case 'Consultar Mercaderes':
+                await console.log(inventario.getMercaderes());
+                break;
+            case 'Main Menu':
+                await main();
+                break;
+            case 'Salir':
+                process.exit(0);
+                break;
+        }
+
+    }
+
+
+}
+
+async function addMercader(){
+    const { id, nombre, tipo, ubicacion  } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Ingrese el ID:',
+            //validate: (input: string) => {
+            //    return !isNaN(parseInt(input)) || "No es numero";
+            //},
+            filter: (input: string) => parseInt(input)
+        },
+        {
+            type: 'input',
+            name: 'nombre',
+            message: 'Ingrese el nombre:',
+        },
+        {
+            type: 'input',
+            name: 'tipo',
+            message: 'Ingrese el tipo:',
+        }, 
+        {
+            type: 'input',
+            name: 'ubicacion',
+            message: 'Ingrese la ubicacion:',
+        },
+    ]);
+
+    // Crear un nuevo objeto Bien y agregarlo
+    const mercader = new Mercader(id, nombre, tipo, ubicacion);
+    inventario.addMercader(mercader);
+}
+
+
+async function gestionarClientes(){
+    while (true) {
+        const { opcion } = await inquirer.prompt([
+            {
+                type: 'list', 
+                name: 'opcion',
+                message: 'Seleccione una opcion: ',
+                choices: ['Añadir Cliente', 'Consultar Clientes', 'Main Menu', 'Salir'],
+            },
+        ]);
+
+        switch(opcion) {
+            case 'Añadir Cliente':
+                await addCliente();
+                break;
+            case 'Consultar Clientes':
+                await console.log(inventario.getClientes());
+                break;
+            case 'Main Menu':
+                await main();
+                break;
+            case 'Salir':
+                process.exit(0);
+                break;
+        }
+
+    }
+
+
+}
+
+async function addCliente(){
+    const { id, nombre, raza, ubicacion  } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Ingrese el ID:',
+            //validate: (input: string) => {
+            //    return !isNaN(parseInt(input)) || "No es numero";
+            //},
+            filter: (input: string) => parseInt(input)
+        },
+        {
+            type: 'input',
+            name: 'nombre',
+            message: 'Ingrese el nombre:',
+        },
+        {
+            type: 'input',
+            name: 'raza',
+            message: 'Ingrese la raza:',
+        }, 
+        {
+            type: 'input',
+            name: 'ubicacion',
+            message: 'Ingrese la ubicacion:',
+        },
+    ]);
+
+    // Crear un nuevo objeto Bien y agregarlo
+    const cliente = new Cliente(id, nombre, raza, ubicacion);
+    inventario.addCliente(cliente);
+}
+
 
 main();

@@ -32,6 +32,12 @@ export class Inventario {
     addBien(bien: Bien){
         //db.read();
         //db.data.bienes.push(bien);
+
+        if(isNaN(bien.id) || isNaN(bien.peso) || isNaN(bien.valor)){
+            console.log("Error. ID, peso y valor deben ser tipo number.");
+            return;
+        }
+
         if(db.data?.bienes.some((b: Bien) => b.id === bien.id)){
             console.log("ID del bien no unico.");
         } else {
@@ -46,6 +52,12 @@ export class Inventario {
     addMercader(mercader: Mercader){
         //db.read();
         //db.data.bienes.push(bien);
+
+        if(isNaN(mercader.id)){
+            console.log("Error. ID debe ser tipo number.");
+            return;
+        }
+
         if(db.data?.mercaderes.some((m: Mercader) => m.id === mercader.id)){
             console.log("ID del mercader no unico.");
         } else {
@@ -59,6 +71,11 @@ export class Inventario {
 
     addCliente(cliente: Cliente){
         db.read();
+
+        if(isNaN(cliente.id)){
+            console.log("Error. ID debe ser tipo number.");
+            return;
+        }
         //db.data.bienes.push(bien);
         if(db.data?.clientes.some((c: Cliente) => c.id === cliente.id)){
             console.log("ID del bien no unico.");
