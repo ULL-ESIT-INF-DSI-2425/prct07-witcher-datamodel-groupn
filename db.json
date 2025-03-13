@@ -1,0 +1,38 @@
+{
+  "bienes": [
+    {
+      "id": 4,
+      "nombre": "bien4",
+      "descripcion": "desc4",
+      "material": "mat4",
+      "peso": 3,
+      "valor": 10
+    },
+    {
+      "id": 3,
+      "nombre": "bien3",
+      "descripcion": "desc3",
+      "material": "mat3",
+      "peso": 3,
+      "valor": 10
+    },
+    {
+      "id": 6,
+      "nombre": "bien6",
+      "descripcion": "desc6",
+      "material": "mat6",
+      "peso": 3,
+      "valor": 10
+    },
+    {
+      "id": "1",
+      "nombre": "bienInquirer",
+      "descripcion": "add por prompt",
+      "material": "material1",
+      "peso": "10",
+      "valor": "200"
+    }
+  ],
+  "mercaderes": [],
+  "clientes": []
+}

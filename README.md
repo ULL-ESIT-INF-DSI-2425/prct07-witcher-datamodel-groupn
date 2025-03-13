@@ -9,4 +9,4 @@ Coveralls, una herramienta que permite ir registrando un histórico de cubrimien
 
 [![CI TESTS](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupn/actions/workflows/ci.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupn/actions/workflows/ci.yml)
 
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct06-generics-solid-IsmaelAF/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct06-generics-solid-IsmaelAF?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupn/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupn?branch=main)

@@ -8,7 +8,7 @@
     "dev": "tsc-watch --onSuccess \"node dist/basicFunctions.js\"",
     "doc": "typedoc --out ./docs ./src/**/*.ts",
     "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.include src/ejercicio-{1,2,3,4,5,6,PE}/*"
+    "coverage": "vitest run --coverage --coverage.include 'src/**/*'"
   },
   "keywords": [],
   "author": "",
