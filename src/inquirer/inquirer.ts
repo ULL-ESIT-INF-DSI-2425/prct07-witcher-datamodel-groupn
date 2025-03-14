@@ -18,7 +18,7 @@ const inventario = new Inventario();
  */
 export async function main() {
     while (true) {
-        const { opcion } = await inquirer.prompt([
+        const { opcion }  = await inquirer.prompt([
             {
                 type: 'list', 
                 name: 'opcion',
