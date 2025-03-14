@@ -1,5 +1,14 @@
 import { IBien } from "../interfaces/iBien.js";
-
+/**
+ * Implementación de la interfaz IBien
+ * @param id - Identificador del bien
+ * @param nombre - Nombre del bien
+ * @param descripcion - Descripción del bien
+ * @param material - Material del bien
+ * @param peso - Peso del bien
+ * @param valor - Valor del bien
+ * @returns Bien
+ */
 export class Bien implements IBien{
     public stock: number;
     constructor(

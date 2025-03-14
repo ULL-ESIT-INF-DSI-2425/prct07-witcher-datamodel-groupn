@@ -12,7 +12,7 @@ import { addAbortListener } from "events";
 /**
  *  Objeto que representa el inventario de la tienda
  */
-let inventario = new Inventario();
+const inventario = new Inventario();
 /**
  * Función principal que inicia el menú de la tienda
  */
@@ -149,7 +149,7 @@ async function consultarBienes() {
         }
     ]);
 
-    let bienes = inventario.getBienes();
+    const bienes = inventario.getBienes();
 
     switch(criterio) {
         case 'Nombre':
@@ -217,7 +217,7 @@ async function modificarBien() {
  * Solicita al usuario los datos de un bien.
  */
 async function obtenerDatosBien() {
-    let id = inventario.ultimoIdBien();
+    const id = inventario.ultimoIdBien();
     const { nombre, descripcion, material, peso, valor } = await inquirer.prompt([
         { type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'descripcion', message: 'Descripción:' }, 
@@ -442,7 +442,7 @@ async function modificarMercader() {
 }
 /**
  * Solicita al usuario los datos de un mercader.
- * @returns {Mercader} Objeto de tipo Mercader con los datos ingresados.
+ * @returns \{Mercader\} Objeto de tipo Mercader con los datos ingresados.
  */
 async function obtenerDatosMercader() {
     const { id, nombre, tipo, ubicacion } = await inquirer.prompt([
@@ -672,7 +672,7 @@ async function modificarCliente() {
 }
 /**
  * Solicita al usuario los datos de un cliente.
- * @returns {Cliente} Objeto de tipo Cliente con los datos ingresados.
+ * @returns Cliente Objeto de tipo Cliente con los datos ingresados.
  */
 async function obtenerDatosCliente() {
     const { id, nombre, raza, ubicacion } = await inquirer.prompt([
@@ -794,6 +794,7 @@ async function obtenerDatosCompra(){
     //const bien = inventario.getBienPorId(bienId);
     //console.log(bien);
     if(bien) {
+        const valor = bien.valor;
         return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
     } else {
         return undefined;
@@ -802,4 +803,4 @@ async function obtenerDatosCompra(){
 }
 
 
-main();
+// main();

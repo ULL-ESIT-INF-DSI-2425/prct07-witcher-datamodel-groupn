@@ -8,7 +8,13 @@ import { Bien } from "../elements/Bien.js";
 import { Cliente } from "../elements/Cliente.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Transaccion } from "../elements/Transaccion.js";
-
+/**
+ * Esquema de datos
+ * @param bienes - Lista de bienes
+ * @param mercaderes - Lista de mercaderes
+ * @param clientes - Lista de clientes
+ * @param transacciones - Lista de transacciones
+ */
 type DataSchema = {
     bienes: Bien[];
     mercaderes: Mercader[];

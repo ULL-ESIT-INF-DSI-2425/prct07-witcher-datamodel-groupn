@@ -5,6 +5,9 @@ import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
 import { Transaccion } from "../elements/Transaccion.js";
 
+/**
+ * Clase Inventario que contiene los métodos para interactuar con la base de datos
+ */
 export class Inventario {
     //constructor(){initDB();}
     constructor(){}
@@ -401,7 +404,11 @@ export class Inventario {
     
         console.log(`Cliente con ID ${id} ha sido eliminado correctamente.`);
     }
-
+    /**
+     * Método para obtener todas las transacciones de la base de datos
+     * @param transaccion - Transacción a agregar
+     * @returns - Lista de transacciones o null si no hay transacciones
+     */
     addTransaccion(transaccion: Transaccion){
         /* añadir a la base de datos según el tipo de transaccion
             COMPROBAR QUE EL IDINVOLUCRADO EXISTA
@@ -443,7 +450,9 @@ export class Inventario {
 
 
     }
-
+    /**
+     * @returns - Lista de transacciones o null si no hay transacciones
+     */
     ultimoIdBien(): number {
         db.read();
 

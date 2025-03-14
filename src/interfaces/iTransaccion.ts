@@ -1,5 +1,13 @@
 import { Bien } from "../elements/Bien.js"
-
+/**
+ * Interfaz de Transacción
+ * @param id - Identificador de la transacción
+ * @param tipo - Tipo de la transacción
+ * @param idInvolucrado - Identificador del involucrado en la transacción
+ * @param fecha - Fecha de la transacción
+ * @param bien - Bien involucrado en la transacción
+ * @param valor - Valor de la transacción
+ */
 export interface iTransaccion {
     id: number,
     tipo: "venta" | "compra" | "devolucion",
