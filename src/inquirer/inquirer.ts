@@ -731,7 +731,12 @@ async function transaccionVenta(){
 }
 
 async function transaccionCompra(){
-    //const transaccion = await obtenerDatosTransaccion();
+    const transaccion = await obtenerDatosCompra();
+   // if (transaccion) {
+   //     inventario.addTransaccion(transaccion);
+   // } else {
+   //     console.log("Error. Bien no encontrado.");
+   // }
     //inventario.addTransaccion(transaccion);
 }
 
@@ -742,13 +747,13 @@ async function transaccionDevolucion(){
 }
 
 async function obtenerDatosVenta(){
-    const { idInvolucrado, fecha, bienId, valor } = await inquirer.prompt([
+    const { idInvolucrado, fecha, bienId } = await inquirer.prompt([
         //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
         //{ type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'idInvolucrado', message: 'Id del cliente:', filter: input => parseInt(input)}, 
         { type: 'input', name: 'fecha', message: 'Fecha:' }, 
         { type: 'input', name: 'bienId', message: 'Id del Bien:', filter: input => parseInt(input) }, 
-        { type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
+        //{ type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
     ]);
     //return new Transaccion(id, nombre, descripcion, material, peso, valor);
 
@@ -756,6 +761,35 @@ async function obtenerDatosVenta(){
     //console.log(id);
     const tipo = "venta";
     const bien = inventario.getBienPorId(bienId);
+
+    //const valor = bien?.valor;
+    //console.log(bien);
+    if(bien) {
+        const valor = bien.valor;
+        return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+    } else {
+        return undefined;
+    }
+    //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+}
+
+async function obtenerDatosCompra(){
+
+    const { idInvolucrado, fecha } = await inquirer.prompt([
+        //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
+        //{ type: 'input', name: 'nombre', message: 'Nombre:' },
+        { type: 'input', name: 'idInvolucrado', message: 'Id del Mercader:', filter: input => parseInt(input)}, 
+        { type: 'input', name: 'fecha', message: 'Fecha:' }, 
+        //{ type: 'input', name: 'bienId', message: 'Id del Bien:', filter: input => parseInt(input) }, 
+        //{ type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
+    ]);
+    //return new Transaccion(id, nombre, descripcion, material, peso, valor);
+
+    
+    const id = inventario.idTransaccion();
+    //console.log(id);
+    const tipo = "compra";
+    //const bien = inventario.getBienPorId(bienId);
     //console.log(bien);
     if(bien) {
         return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
@@ -764,8 +798,6 @@ async function obtenerDatosVenta(){
     }
     //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
 }
-
-
 
 
 main();
