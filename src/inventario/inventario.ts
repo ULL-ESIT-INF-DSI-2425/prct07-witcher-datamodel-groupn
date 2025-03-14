@@ -3,6 +3,7 @@ import { db } from "../db/lowdb.js";
 import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
+import { Transaccion } from "../elements/Transaccion.js";
 
 export class Inventario {
     //constructor(){initDB();}
@@ -107,6 +108,55 @@ export class Inventario {
         //db.data?.bienes.push(bien);
         //db.write();
     }
+
+    /**
+     * Método para obtener los mercaderes que se llamen de una forma específica
+     * @param nombre - Nombre de los mercaderes a buscar
+     * @returns - Los mercaderes con dicho nombre o null si no hay ninguno que se llame así
+     */
+    getMercaderesPorNombre(nombre: string) {
+        db.read();
+        const mercaderes = db.data?.mercaderes.find((b: Mercader) => b.nombre === nombre);
+        if (mercaderes) {
+            return mercaderes;
+        } else {
+            console.log("No existe ningún mercader con ese nombre.");
+            return null;
+        }
+    }
+
+    /**
+     * Método para obtener los mercaderes que se sean de un tipo específico
+     * @param tipo - Tipo de los mercaderes a buscar
+     * @returns - Los mercaderes con dicho tipo o null si no hay ninguno que tenga el tipo indicado
+     */
+    getMercaderesPorTipo(tipo: string) {
+        db.read();
+        const mercaderes = db.data?.mercaderes.find((b: Mercader) => b.tipo === tipo);
+        if (mercaderes) {
+            return mercaderes;
+        } else {
+            console.log("No existe ningún mercader con ese tipo.");
+            return null;
+        }
+    }
+
+    /**
+     * Método para obtener los mercaderes que se encuentren en una ubicación específica
+     * @param ubicacion - Ubicación de los mercaderes a buscar
+     * @returns - Los mercaderes que se encuentren en dicha ubicación o null si no hay ninguno en la ubicación indicada
+     */
+    getMercaderesPorUbicacion(ubicacion: string) {
+        db.read();
+        const mercaderes = db.data?.mercaderes.find((b: Mercader) => b.ubicacion === ubicacion);
+        if (mercaderes) {
+            return mercaderes;
+        } else {
+            console.log("No existe ningún mercader en esa ubicación.");
+            return null;
+        }
+    }
+
     /**
      * Método para obtener un bien por su ID
      * @param id - ID del bien a buscar
@@ -303,5 +353,7 @@ export class Inventario {
     
         console.log(`Cliente con ID ${id} ha sido eliminado correctamente.`);
     }
+
+    
     
 }

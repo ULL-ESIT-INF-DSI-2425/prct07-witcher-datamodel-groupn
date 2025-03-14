@@ -22,7 +22,7 @@ export async function main() {
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Gestionar Bienes', 'Gestionar Mercaderes', 'Gestionar Clientes', 'Salir'],
+                choices: ['Gestionar Bienes', 'Gestionar Mercaderes', 'Gestionar Clientes', 'Transacciones', 'Salir'],
             },
         ]);
 
@@ -35,6 +35,9 @@ export async function main() {
                 break;
             case 'Gestionar Clientes':
                 await gestionarClientes();
+                break;
+            case 'Transacciones':
+                await gestionarTransaccion();
                 break;
             case 'Salir':
                 process.exit(0);
@@ -52,7 +55,7 @@ async function gestionarBienes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Bien', 'Consultar Bienes', 'Eliminar Bienes','Main Menu', 'Salir'],
+                choices: ['Añadir Bien', 'Consultar Bienes','Modificar Bienes', 'Eliminar Bienes','Main Menu', 'Salir'],
             },
         ]);
 
@@ -61,7 +64,10 @@ async function gestionarBienes(){
                 await addBien();
                 break;
             case 'Consultar Bienes':
-                await console.log(inventario.getBienes());
+                await consultarBienes();
+                break;
+            case 'Modificar Bienes':
+                await modificarBien();
                 break;
             case 'Eliminar Bienes':
                 await removeBien();
@@ -230,7 +236,7 @@ async function gestionarMercaderes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Mercader', 'Consultar Mercaderes', 'Eliminar Mercaderes', 'Main Menu', 'Salir'],
+                choices: ['Añadir Mercader', 'Consultar Mercaderes','Modificar Mercader', 'Localizar Mercaderes', 'Eliminar Mercaderes', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -239,7 +245,13 @@ async function gestionarMercaderes(){
                 await addMercader();
                 break;
             case 'Consultar Mercaderes':
-                await console.log(inventario.getMercaderes());
+                await consultarMercaderes();
+                break;
+            case 'Modificar Mercader':
+                await modificarMercader();
+                break;
+            case 'Localizar Mercaderes':
+                await localizarMercader();
                 break;
             case 'Eliminar Mercaderes':
                 await removeMercader();
@@ -269,6 +281,78 @@ async function addMercader() {
 async function consultarMercaderes() {
     console.log(inventario.getMercaderes());
 }
+
+/**
+ * Consulta el criterio a la hora de buscar información sobre un mercader
+ */
+async function localizarMercader() {
+    const { criterio } = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'criterio',
+            message: 'Seleccione criterio de búsqueda:',
+            choices: ['Nombre', 'Tipo', 'Ubicación']
+        }
+    ]);
+
+    switch(criterio) {
+        case 'Nombre':
+            await localizarMercaderPorNombre();
+            break;
+        case 'Tipo':
+            await localizarMercaderPorTipo();
+            break;
+        case 'Ubicación':
+            await localizarMercaderPorUbicacion();
+            break;
+    }
+}
+
+async function localizarMercaderPorNombre() {
+    const { nombre } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'nombre',
+            message: 'Ingrese el Nombre del mercader que desea localizar:',
+        },
+    ]);
+
+    const mercaderes = inventario.getMercaderesPorNombre(nombre);
+    if (mercaderes) {
+        console.log(mercaderes);
+    }
+}
+
+async function localizarMercaderPorTipo() {
+    const { tipo } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'tipo',
+            message: 'Ingrese el Tipo del mercader que desea localizar:',
+        },
+    ]);
+
+    const mercaderes = inventario.getMercaderesPorTipo(tipo);
+    if (mercaderes) {
+        console.log(mercaderes);
+    }
+}
+
+async function localizarMercaderPorUbicacion() {
+    const { ubicacion } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'ubicacion',
+            message: 'Ingrese la ubicación de los mercaderes que desea localizar:',
+        },
+    ]);
+
+    const mercaderes = inventario.getMercaderesPorUbicacion(ubicacion);
+    if (mercaderes) {
+        console.log(mercaderes);
+    }
+}
+
 // async function addMercader(){
 //     const { id, nombre, tipo, ubicacion  } = await inquirer.prompt([
 //         {
@@ -363,7 +447,7 @@ async function gestionarClientes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Cliente', 'Consultar Clientes','Eliminar Clientes', 'Main Menu', 'Salir'],
+                choices: ['Añadir Cliente', 'Consultar Clientes','Eliminar Clientes', 'Modificar Cliente', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -372,7 +456,10 @@ async function gestionarClientes(){
                 await addCliente();
                 break;
             case 'Consultar Clientes':
-                await console.log(inventario.getClientes());
+                await consultarClientes();
+                break;
+            case 'Modificar Cliente':
+                await modificarCliente();
                 break;
             case 'Eliminar Clientes':
                 await removeCliente();
@@ -488,6 +575,10 @@ async function obtenerDatosCliente() {
         { type: 'input', name: 'ubicacion', message: 'Ubicación:' },
     ]);
     return new Cliente(id, nombre, raza, ubicacion);
+}
+
+async function gestionarTransaccion(){
+
 }
 
 main();
