@@ -404,8 +404,64 @@ export class Inventario {
 
     addTransaccion(transaccion: Transaccion){
         /* añadir a la base de datos según el tipo de transaccion
+            COMPROBAR QUE EL IDINVOLUCRADO EXISTA
             idInvolucrado: venta -> cliente.   compra -> mercader.    devolucion->cliente | mercader.
         */
+
+        if(transaccion.tipo === "venta") {
+            //transaccion.idInvolucrado exista en cliente
+            //const existe = db.data?.clientes.findIndex((c: Cliente) => c.id === transaccion.idInvolucrado);
+            //console.log(existe);
+            const existe = this.getClientePorId(transaccion.idInvolucrado);
+
+            if (existe) {
+                db.data?.transacciones.push(transaccion);
+                db.write();
+            } else {
+                console.log("Error. idInvolucrado no existe en Clientes.");
+            }
+        } else if(transaccion.tipo === "compra") {
+            const existe = this.getMercaderPorId(transaccion.idInvolucrado);
+            if (existe) {
+                db.data?.transacciones.push(transaccion);
+                db.write();
+            } else {
+                console.log("Error. idInvolucrado no existe en Mercaderes.");
+            }
+        } else if(transaccion.tipo === "devolucion") {
+            const existeCliente = this.getClientePorId(transaccion.idInvolucrado);
+            const existeMercader = this.getMercaderPorId(transaccion.idInvolucrado);
+            
+            
+            if (existeCliente || existeMercader) {
+                db.data?.transacciones.push(transaccion);
+                db.write();
+            } else {
+                console.log("Error. idInvolucrado no existe en Clientes o Mercaderes.");
+            }
+        }
+
+
+    }
+
+    ultimoIdBien(): number {
+        db.read();
+
+        // let ultimoId = db.data?.bienes.length;
+        let ultimoId = 0;
+        db.data?.bienes.forEach((bien) => {
+            if (bien.id > ultimoId) {
+                ultimoId = bien.id;
+            }
+        });
+        if (ultimoId === 0 || ultimoId === undefined) {
+            let nextId = 1;
+            return nextId;
+        }  else {
+            let nextId = ultimoId + 1;
+            return nextId;
+        }
+
     }
 
     idTransaccion(): number{

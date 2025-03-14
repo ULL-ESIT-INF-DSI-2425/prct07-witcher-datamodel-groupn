@@ -15,6 +15,22 @@
       "material": "2",
       "peso": 2,
       "valor": 2
+    },
+    {
+      "id": 4,
+      "nombre": "5",
+      "descripcion": "5",
+      "material": "5",
+      "peso": 5,
+      "valor": 5
+    },
+    {
+      "id": 5,
+      "nombre": "5",
+      "descripcion": "5",
+      "material": "5",
+      "peso": 5,
+      "valor": 5
     }
   ],
   "mercaderes": [
@@ -45,5 +61,36 @@
       "ubicacion": "8"
     }
   ],
-  "transacciones": []
+  "transacciones": [
+    {
+      "id": 1,
+      "tipo": "venta",
+      "idInvolucrado": 8,
+      "fecha": "6",
+      "bien": {
+        "id": 1,
+        "nombre": "1",
+        "descripcion": "1",
+        "material": "1",
+        "peso": 1,
+        "valor": 1
+      },
+      "valor": 1
+    },
+    {
+      "id": 2,
+      "tipo": "venta",
+      "idInvolucrado": 5,
+      "fecha": "6",
+      "bien": {
+        "id": 2,
+        "nombre": "2",
+        "descripcion": "2",
+        "material": "2",
+        "peso": 2,
+        "valor": 2
+      },
+      "valor": 3
+    }
+  ]
 }

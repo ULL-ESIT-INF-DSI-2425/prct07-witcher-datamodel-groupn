@@ -217,13 +217,7 @@ async function modificarBien() {
  * Solicita al usuario los datos de un bien.
  */
 async function obtenerDatosBien() {
-    const bienes = inventario.getBienes();
-    let id : number;
-    if (bienes) {
-        id = bienes[bienes.length].id + 1;
-    } else {
-        id = 1;
-    }
+    let id = inventario.ultimoIdBien();
     const { nombre, descripcion, material, peso, valor } = await inquirer.prompt([
         { type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'descripcion', message: 'Descripción:' }, 
@@ -727,6 +721,11 @@ while (true) {
 async function transaccionVenta(){
     //obtener datos de la venta
     const transaccion = await obtenerDatosVenta();
+    if (transaccion) {
+        inventario.addTransaccion(transaccion);
+    } else {
+        console.log("Error. Bien no encontrado.");
+    }
     //inventario.addTransaccion(transaccion);
 
 }
@@ -743,22 +742,30 @@ async function transaccionDevolucion(){
 }
 
 async function obtenerDatosVenta(){
-    const { idInvolucrado, fecha, bienes, valor } = await inquirer.prompt([
+    const { idInvolucrado, fecha, bienId, valor } = await inquirer.prompt([
         //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
         //{ type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'idInvolucrado', message: 'Id del cliente:', filter: input => parseInt(input)}, 
         { type: 'input', name: 'fecha', message: 'Fecha:' }, 
-        { type: 'input', name: 'idien', message: 'Id delBien:', filter: input => parseInt(input) }, 
+        { type: 'input', name: 'bienId', message: 'Id del Bien:', filter: input => parseInt(input) }, 
         { type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
     ]);
     //return new Transaccion(id, nombre, descripcion, material, peso, valor);
 
     const id = inventario.idTransaccion();
-    console.log(id);
+    //console.log(id);
     const tipo = "venta";
-
+    const bien = inventario.getBienPorId(bienId);
+    //console.log(bien);
+    if(bien) {
+        return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+    } else {
+        return undefined;
+    }
     //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
 }
+
+
 
 
 main();
