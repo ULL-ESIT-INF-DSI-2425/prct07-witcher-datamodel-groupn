@@ -785,10 +785,12 @@ async function obtenerDatosCompra(){
     ]);
     //return new Transaccion(id, nombre, descripcion, material, peso, valor);
 
-    
+
+
     const id = inventario.idTransaccion();
     //console.log(id);
     const tipo = "compra";
+    const bien = await obtenerDatosBien();
     //const bien = inventario.getBienPorId(bienId);
     //console.log(bien);
     if(bien) {
