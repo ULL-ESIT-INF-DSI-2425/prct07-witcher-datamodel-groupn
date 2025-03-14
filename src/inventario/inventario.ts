@@ -3,7 +3,7 @@ import { db } from "../db/lowdb.js";
 import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
-import { Transaccion } from "../elements/Transaccion.js";
+import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
 
 /**
  * Clase Inventario que contiene los métodos para interactuar con la base de datos
@@ -409,11 +409,13 @@ export class Inventario {
      * @param transaccion - Transacción a agregar
      * @returns - Lista de transacciones o null si no hay transacciones
      */
-    addTransaccion(transaccion: Transaccion){
+    addTransaccion(transaccion: Transaccion | TransaccionDevolucion): boolean{
         /* añadir a la base de datos según el tipo de transaccion
             COMPROBAR QUE EL IDINVOLUCRADO EXISTA
             idInvolucrado: venta -> cliente.   compra -> mercader.    devolucion->cliente | mercader.
         */
+
+        //let result: boolean = false;
 
         if(transaccion.tipo === "venta") {
             //transaccion.idInvolucrado exista en cliente
@@ -424,6 +426,7 @@ export class Inventario {
             if (existe) {
                 db.data?.transacciones.push(transaccion);
                 db.write();
+                return true;
             } else {
                 console.log("Error. idInvolucrado no existe en Clientes.");
             }
@@ -432,21 +435,40 @@ export class Inventario {
             if (existe) {
                 db.data?.transacciones.push(transaccion);
                 db.write();
+                return true;
             } else {
                 console.log("Error. idInvolucrado no existe en Mercaderes.");
             }
         } else if(transaccion.tipo === "devolucion") {
-            const existeCliente = this.getClientePorId(transaccion.idInvolucrado);
-            const existeMercader = this.getMercaderPorId(transaccion.idInvolucrado);
             
             
-            if (existeCliente || existeMercader) {
-                db.data?.transacciones.push(transaccion);
-                db.write();
-            } else {
-                console.log("Error. idInvolucrado no existe en Clientes o Mercaderes.");
+            if (transaccion instanceof TransaccionDevolucion){
+
+                let existe: Cliente | Mercader | null = null;
+
+                if (transaccion.devolucion === "Cliente") {
+                    existe = this.getClientePorId(transaccion.idInvolucrado);
+                } else if (transaccion.devolucion === "Mercader") {
+                    existe = this.getMercaderPorId(transaccion.idInvolucrado);
+                }
+
+                if (existe) {
+                    db.data?.transacciones.push(transaccion);
+                    db.write();
+                    return true;
+                } else {
+                    console.log("Error. idInvolucrado no existe en Clientes o Mercaderes.");
+                }
             }
+
+            //const existeCliente = this.getClientePorId(transaccion.idInvolucrado);
+            //const existeMercader = this.getMercaderPorId(transaccion.idInvolucrado);
+            
+            //return false;
+            
+            
         }
+        return false;
 
 
     }

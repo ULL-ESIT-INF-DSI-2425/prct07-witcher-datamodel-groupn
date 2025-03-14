@@ -17,6 +17,10 @@ export interface iTransaccion {
     valor: number
 }
 
+export interface iTransaccionDevolucion extends iTransaccion {
+    devolucion: "Cliente" | "Mercader"
+}
+
 /*
 Venta: cliente, fecha, bienes, valor
 Compra: mercaderes, fecha, bienes, valor

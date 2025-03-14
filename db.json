@@ -1,36 +1,52 @@
 {
   "bienes": [
     {
-      "id": 1,
-      "nombre": "1",
-      "descripcion": "1",
-      "material": "1",
-      "peso": 1,
-      "valor": 1
-    },
-    {
-      "id": 2,
-      "nombre": "2",
-      "descripcion": "2",
-      "material": "2",
-      "peso": 2,
-      "valor": 2
-    },
-    {
-      "id": 4,
-      "nombre": "5",
-      "descripcion": "5",
-      "material": "5",
-      "peso": 5,
-      "valor": 5
-    },
-    {
       "id": 5,
       "nombre": "5",
       "descripcion": "5",
       "material": "5",
       "peso": 5,
       "valor": 5
+    },
+    {
+      "id": 8,
+      "nombre": "bienDevoluci",
+      "descripcion": "biendev",
+      "material": "dev",
+      "peso": 12,
+      "valor": 123
+    },
+    {
+      "id": 9,
+      "nombre": "dev",
+      "descripcion": "dev",
+      "material": "dev",
+      "peso": 21,
+      "valor": 42
+    },
+    {
+      "id": 10,
+      "nombre": "nombre",
+      "descripcion": "des",
+      "material": "da",
+      "peso": 123,
+      "valor": 1234
+    },
+    {
+      "id": 11,
+      "nombre": "bienComprado",
+      "descripcion": "descComprado",
+      "material": "matComprado",
+      "peso": 124,
+      "valor": 412
+    },
+    {
+      "id": 12,
+      "nombre": "nombreDev",
+      "descripcion": "dad",
+      "material": "das",
+      "peso": 135,
+      "valor": 543
     }
   ],
   "mercaderes": [
@@ -91,6 +107,207 @@
         "valor": 2
       },
       "valor": 3
+    },
+    {
+      "id": 3,
+      "tipo": "compra",
+      "idInvolucrado": 1,
+      "fecha": "2",
+      "bien": {
+        "id": 6,
+        "nombre": "nuevoBien",
+        "descripcion": "nuevobien",
+        "material": "nuevobien",
+        "peso": 3,
+        "valor": 3
+      },
+      "valor": 3
+    },
+    {
+      "id": 4,
+      "tipo": "compra",
+      "idInvolucrado": 1,
+      "fecha": "23",
+      "bien": {
+        "id": 6,
+        "nombre": "nombrebien2",
+        "descripcion": "desc4",
+        "material": "mater22",
+        "peso": 32,
+        "valor": 222
+      },
+      "valor": 222
+    },
+    {
+      "id": 5,
+      "tipo": "compra",
+      "idInvolucrado": 1,
+      "fecha": "23",
+      "bien": {
+        "id": 7,
+        "nombre": "npmre",
+        "descripcion": "nrsda",
+        "material": "das",
+        "peso": null,
+        "valor": 23
+      },
+      "valor": 23
+    },
+    {
+      "id": 6,
+      "tipo": "compra",
+      "idInvolucrado": 1,
+      "fecha": "12",
+      "bien": {
+        "id": 7,
+        "nombre": "12",
+        "descripcion": "12",
+        "material": "12",
+        "peso": 12,
+        "valor": 12
+      },
+      "valor": 12
+    },
+    {
+      "id": 7,
+      "tipo": "venta",
+      "idInvolucrado": 5,
+      "fecha": "54",
+      "bien": {
+        "id": 6,
+        "nombre": "nombrebien2",
+        "descripcion": "desc4",
+        "material": "mater22",
+        "peso": 32,
+        "valor": 222
+      },
+      "valor": 222
+    },
+    {
+      "id": 8,
+      "tipo": "venta",
+      "idInvolucrado": 5,
+      "fecha": "12",
+      "bien": {
+        "id": 6,
+        "nombre": "nombrebien2",
+        "descripcion": "desc4",
+        "material": "mater22",
+        "peso": 32,
+        "valor": 222
+      },
+      "valor": 222
+    },
+    {
+      "id": 9,
+      "tipo": "devolucion",
+      "idInvolucrado": 1,
+      "fecha": "12",
+      "bien": {
+        "id": 2,
+        "nombre": "2",
+        "descripcion": "2",
+        "material": "2",
+        "peso": 2,
+        "valor": 2
+      },
+      "valor": 2,
+      "devolucion": "Mercader"
+    },
+    {
+      "id": 10,
+      "tipo": "devolucion",
+      "idInvolucrado": 1,
+      "fecha": "4",
+      "bien": {
+        "id": 4,
+        "nombre": "5",
+        "descripcion": "5",
+        "material": "5",
+        "peso": 5,
+        "valor": 5
+      },
+      "valor": 5,
+      "devolucion": "Mercader"
+    },
+    {
+      "id": 11,
+      "tipo": "devolucion",
+      "idInvolucrado": 5,
+      "fecha": "43",
+      "bien": {
+        "id": 8,
+        "nombre": "bienDevoluci",
+        "descripcion": "biendev",
+        "material": "dev",
+        "peso": 12,
+        "valor": 123
+      },
+      "valor": 123,
+      "devolucion": "Cliente"
+    },
+    {
+      "id": 12,
+      "tipo": "devolucion",
+      "idInvolucrado": 5,
+      "fecha": "51",
+      "bien": {
+        "id": 9,
+        "nombre": "dev",
+        "descripcion": "dev",
+        "material": "dev",
+        "peso": 21,
+        "valor": 42
+      },
+      "valor": 42,
+      "devolucion": "Cliente"
+    },
+    {
+      "id": 13,
+      "tipo": "compra",
+      "idInvolucrado": 10,
+      "fecha": "123",
+      "bien": {
+        "id": 11,
+        "nombre": "bienComprado",
+        "descripcion": "descComprado",
+        "material": "matComprado",
+        "peso": 124,
+        "valor": 412
+      },
+      "valor": 412
+    },
+    {
+      "id": 14,
+      "tipo": "devolucion",
+      "idInvolucrado": 1,
+      "fecha": "123",
+      "bien": {
+        "id": 7,
+        "nombre": "12",
+        "descripcion": "12",
+        "material": "12",
+        "peso": 12,
+        "valor": 12
+      },
+      "valor": 12,
+      "devolucion": "Mercader"
+    },
+    {
+      "id": 15,
+      "tipo": "devolucion",
+      "idInvolucrado": 5,
+      "fecha": "123",
+      "bien": {
+        "id": 12,
+        "nombre": "nombreDev",
+        "descripcion": "dad",
+        "material": "das",
+        "peso": 135,
+        "valor": 543
+      },
+      "valor": 543,
+      "devolucion": "Cliente"
     }
   ]
 }

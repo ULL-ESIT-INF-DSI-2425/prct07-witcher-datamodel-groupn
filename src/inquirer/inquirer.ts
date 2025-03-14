@@ -7,7 +7,7 @@ import { Inventario } from "../inventario/inventario.js";
 import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
-import { Transaccion } from "../elements/Transaccion.js";
+import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
 import { addAbortListener } from "events";
 /**
  *  Objeto que representa el inventario de la tienda
@@ -724,6 +724,7 @@ async function transaccionVenta(){
     const transaccion = await obtenerDatosVenta();
     if (transaccion) {
         inventario.addTransaccion(transaccion);
+        inventario.removeBien(transaccion.bien.id);
     } else {
         console.log("Error. Bien no encontrado.");
     }
@@ -733,74 +734,130 @@ async function transaccionVenta(){
 
 async function transaccionCompra(){
     const transaccion = await obtenerDatosCompra();
-   // if (transaccion) {
-   //     inventario.addTransaccion(transaccion);
-   // } else {
-   //     console.log("Error. Bien no encontrado.");
-   // }
+    if (transaccion) {
+
+        inventario.addTransaccion(transaccion);
+        inventario.addBien(transaccion.bien);
+        //addBien();
+    } else {
+        console.log("Error. Bien no encontrado.");
+    }
     //inventario.addTransaccion(transaccion);
 }
 
 async function transaccionDevolucion(){
 
-    //const transaccion = await obtenerDatosTransaccion();
-    //inventario.addTransaccion(transaccion);
+
+    const transaccion = await obtenerDatosDevolucion();
+    if (transaccion) {
+        // FUNCIONAMIENTO DEVOLUCION: dev de un cliente, añadimos el bien a la db. dev a un mercader, eliminamos el bien de la db.
+        if(transaccion.devolucion === "Cliente") {
+            let result = inventario.addTransaccion(transaccion);
+            if (result) {
+                inventario.addBien(transaccion.bien);
+            }
+            
+        } else if(transaccion.devolucion === "Mercader") {
+            let result = inventario.addTransaccion(transaccion);
+            if (result) {
+                inventario.removeBien(transaccion.bien.id);
+            }
+            
+        }
+        
+    } else {
+        console.log("Error. Bien no encontrado.");
+    }
+    
 }
 
 async function obtenerDatosVenta(){
     const { idInvolucrado, fecha, bienId } = await inquirer.prompt([
-        //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
-        //{ type: 'input', name: 'nombre', message: 'Nombre:' },
+        
         { type: 'input', name: 'idInvolucrado', message: 'Id del cliente:', filter: input => parseInt(input)}, 
         { type: 'input', name: 'fecha', message: 'Fecha:' }, 
         { type: 'input', name: 'bienId', message: 'Id del Bien:', filter: input => parseInt(input) }, 
-        //{ type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
+        
     ]);
-    //return new Transaccion(id, nombre, descripcion, material, peso, valor);
+    
 
     const id = inventario.idTransaccion();
-    //console.log(id);
+    
     const tipo = "venta";
     const bien = inventario.getBienPorId(bienId);
 
-    //const valor = bien?.valor;
-    //console.log(bien);
+    
     if(bien) {
         const valor = bien.valor;
         return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
     } else {
         return undefined;
     }
-    //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
 }
 
 async function obtenerDatosCompra(){
 
-    const { idInvolucrado, fecha } = await inquirer.prompt([
-        //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
-        //{ type: 'input', name: 'nombre', message: 'Nombre:' },
-        { type: 'input', name: 'idInvolucrado', message: 'Id del Mercader:', filter: input => parseInt(input)}, 
+    const { idMercader, fecha } = await inquirer.prompt([
+        { type: 'input', name: 'idMercader', message: 'Id del Mercader:', filter: input => parseInt(input)}, 
         { type: 'input', name: 'fecha', message: 'Fecha:' }, 
-        //{ type: 'input', name: 'bienId', message: 'Id del Bien:', filter: input => parseInt(input) }, 
-        //{ type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
     ]);
-    //return new Transaccion(id, nombre, descripcion, material, peso, valor);
-
-
-
+    
     const id = inventario.idTransaccion();
-    //console.log(id);
+    
     const tipo = "compra";
+    const dev = undefined;
+    console.log("Introduzca los datos del Bien: ");
     const bien = await obtenerDatosBien();
-    //const bien = inventario.getBienPorId(bienId);
-    //console.log(bien);
-    if(bien) {
-        return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+    
+    if(bien && !isNaN(bien.peso) && !isNaN(bien.valor) ) {
+        let valor = bien.valor;
+        return new Transaccion(id, tipo, idMercader, fecha, bien, valor);
     } else {
         return undefined;
     }
-    //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+}
+
+async function obtenerDatosDevolucion(){
+
+    const { dev, idInvolucrado, fecha, bienId } = await inquirer.prompt([
+        
+        { type: 'input', name: 'dev', message: 'Devolución de Cliente o Mercader: (Cliente | Mercader)' },
+        { type: 'input', name: 'idInvolucrado', message: 'Id del Cliente o Mercader:', filter: input => parseInt(input)}, 
+        { type: 'input', name: 'fecha', message: 'Fecha:' }, 
+        
+    ]);
+
+    const id = inventario.idTransaccion();
+    
+    const tipo = "devolucion";
+    let bien: Bien | null = null;
+
+    // si dev es de un cliente se obtiene los datos del bien para añadirlo a la db, si dev es Mercader el bien ya está en la db y se elimina(BUSCAR FUNCIONAMIENTO DEVOLUCION) porque se le devuelve al mercader
+    if(dev === "Cliente") {
+        // obtener bien
+        console.log("Introduzca los atributos del Bien: ");
+        bien = await obtenerDatosBien();
+
+    } else if(dev === "Mercader") {
+        const { bienId } = await inquirer.prompt([
+            { type: 'input', name: 'bienId', message: 'ID del bien en Stock a devolver: ', filter: input => parseInt(input) },
+        ]);
+        bien = inventario.getBienPorId(bienId);
+    } else {
+        console.log("Error. Devolución debe ser de Cliente o Mercader");
+        return undefined;
+    }
+    
+    if(bien && (dev === "Cliente" || dev === "Mercader") && !isNaN(bien.peso) && !isNaN(bien.valor) ) {
+        const valor = bien.valor;
+        return new TransaccionDevolucion(id, tipo, idInvolucrado, fecha, bien, valor, dev);
+    } else {
+        return undefined;
+    }
+    
 }
 
 
-// main();
+
+
+main();

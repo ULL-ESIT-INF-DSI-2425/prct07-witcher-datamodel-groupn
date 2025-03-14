@@ -1,4 +1,4 @@
-import {iTransaccion} from "../interfaces/iTransaccion.js"
+import {iTransaccion, iTransaccionDevolucion} from "../interfaces/iTransaccion.js"
 import { Bien } from "./Bien.js"
 /**
  * Implementación de la interfaz iTransaccion
@@ -18,4 +18,17 @@ export class Transaccion implements iTransaccion{
         public bien: Bien,
         public valor: number
     ) {}
+}
+
+
+export class TransaccionDevolucion extends Transaccion implements iTransaccionDevolucion {
+    constructor(
+        id: number,
+        tipo: "venta" | "compra" | "devolucion",
+        idInvolucrado: number,
+        fecha: string,
+        bien: Bien,
+        valor: number,
+        public devolucion: "Cliente" | "Mercader",
+    ) {super(id, tipo, idInvolucrado, fecha, bien, valor)}
 }
