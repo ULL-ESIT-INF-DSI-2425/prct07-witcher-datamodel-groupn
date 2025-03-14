@@ -7,7 +7,7 @@ export class Transaccion implements iTransaccion{
         public tipo: "venta" | "compra" | "devolucion",
         public idInvolucrado: number,
         public fecha: string,
-        public bienes: Bien[],
+        public bien: Bien,
         public valor: number
     ) {}
 }

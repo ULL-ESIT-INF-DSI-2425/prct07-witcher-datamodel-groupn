@@ -7,6 +7,7 @@ import { Inventario } from "../inventario/inventario.js";
 import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
+import { Transaccion } from "../elements/Transaccion.js";
 import { addAbortListener } from "events";
 /**
  *  Objeto que representa el inventario de la tienda
@@ -216,15 +217,21 @@ async function modificarBien() {
  * Solicita al usuario los datos de un bien.
  */
 async function obtenerDatosBien() {
-    const { id, nombre, descripcion, material, peso, valor } = await inquirer.prompt([
-        { type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
+    const bienes = inventario.getBienes();
+    let id : number;
+    if (bienes) {
+        id = bienes[bienes.length].id + 1;
+    } else {
+        id = 1;
+    }
+    const { nombre, descripcion, material, peso, valor } = await inquirer.prompt([
         { type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'descripcion', message: 'Descripción:' }, 
         { type: 'input', name: 'material', message: 'Material:' }, 
         { type: 'input', name: 'peso', message: 'Peso:', filter: input => parseInt(input) }, 
         { type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
     ]);
-    return new Bien(id, nombre, descripcion, material, peso, valor);
+    return new Bien( id, nombre, descripcion, material, peso, valor);
 }
 /**
  * Menú interactivo para gestionar mercaderes.
@@ -291,7 +298,7 @@ async function localizarMercader() {
             type: 'list',
             name: 'criterio',
             message: 'Seleccione criterio de búsqueda:',
-            choices: ['Nombre', 'Tipo', 'Ubicación']
+            choices: ['Nombre', 'Tipo', 'Ubicación', 'Main Menu', 'Salir']
         }
     ]);
 
@@ -305,9 +312,17 @@ async function localizarMercader() {
         case 'Ubicación':
             await localizarMercaderPorUbicacion();
             break;
+        case 'Menu principal':
+            await main();
+            break;
+        case 'Salir':
+            process.exit(0);
+            break;
     }
 }
-
+/**
+ * Muestra los mercaderes que tengan el nombre especificado
+ */
 async function localizarMercaderPorNombre() {
     const { nombre } = await inquirer.prompt([
         {
@@ -323,6 +338,9 @@ async function localizarMercaderPorNombre() {
     }
 }
 
+/**
+ * Muestra los mercaderes que tengan el tipo especificado
+ */
 async function localizarMercaderPorTipo() {
     const { tipo } = await inquirer.prompt([
         {
@@ -338,6 +356,9 @@ async function localizarMercaderPorTipo() {
     }
 }
 
+/**
+ * Muestra los mercaderes que se encuentren en la ubicación especificada
+ */
 async function localizarMercaderPorUbicacion() {
     const { ubicacion } = await inquirer.prompt([
         {
@@ -352,6 +373,8 @@ async function localizarMercaderPorUbicacion() {
         console.log(mercaderes);
     }
 }
+
+
 
 // async function addMercader(){
 //     const { id, nombre, tipo, ubicacion  } = await inquirer.prompt([
@@ -447,7 +470,7 @@ async function gestionarClientes(){
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Añadir Cliente', 'Consultar Clientes','Eliminar Clientes', 'Modificar Cliente', 'Main Menu', 'Salir'],
+                choices: ['Añadir Cliente', 'Consultar Clientes', 'Localizar Cliente', 'Modificar Cliente', 'Eliminar Clientes', 'Main Menu', 'Salir'],
             },
         ]);
 
@@ -457,6 +480,9 @@ async function gestionarClientes(){
                 break;
             case 'Consultar Clientes':
                 await consultarClientes();
+                break;
+            case 'Localizar Cliente':
+                await localizarCliente();
                 break;
             case 'Modificar Cliente':
                 await modificarCliente();
@@ -523,6 +549,93 @@ async function addCliente() {
 async function consultarClientes() {
     console.log(inventario.getClientes());
 }
+
+/**
+ * Consulta el criterio a la hora de buscar información sobre un cliente
+ */
+async function localizarCliente() {
+    const { criterio } = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'criterio',
+            message: 'Seleccione criterio de búsqueda:',
+            choices: ['Nombre', 'Raza', 'Ubicación', 'Main Menu', 'Salir']
+        }
+    ]);
+
+    switch(criterio) {
+        case 'Nombre':
+            await localizarClientePorNombre();
+            break;
+        case 'Raza':
+            await localizarClientePorRaza();
+            break;
+        case 'Ubicación':
+            await localizarClientePorUbicacion();
+            break;
+        case 'Menu principal':
+            await main();
+            break;
+        case 'Salir':
+            process.exit(0);
+            break;
+    }
+}
+
+/**
+ * Muestra los clientes que tengan el nombre especificado
+ */
+async function localizarClientePorNombre() {
+    const { nombre } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'nombre',
+            message: 'Ingrese el Nombre del cliente que desea localizar:',
+        },
+    ]);
+
+    const clientes = inventario.getClientesPorNombre(nombre);
+    if (clientes) {
+        console.log(clientes);
+    }
+}
+
+/**
+ * Muestra los clientes que tengan la raza especificada
+ */
+async function localizarClientePorRaza() {
+    const { raza } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'raza',
+            message: 'Ingrese la raza de los clientes que desea localizar:',
+        },
+    ]);
+
+    const clientes = inventario.getClientesPorRaza(raza);
+    if (clientes) {
+        console.log(clientes);
+    }
+}
+
+/**
+ * Muestra los clientes que esten en la ubicación especificada
+ */
+async function localizarClientePorUbicacion() {
+    const { ubicacion } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'ubicacion',
+            message: 'Ingrese la ubicación de los clientes que desea localizar:',
+        },
+    ]);
+
+    const clientes = inventario.getClientesPorUbicacion(ubicacion);
+    if (clientes) {
+        console.log(clientes);
+    }
+}
+
 /**
  * Elimina un cliente del inventario por su ID.
  */
@@ -578,7 +691,74 @@ async function obtenerDatosCliente() {
 }
 
 async function gestionarTransaccion(){
+while (true) {
+        const { opcion } = await inquirer.prompt([
+            {
+                type: 'list', 
+                name: 'opcion',
+                message: 'Seleccione una opcion: ',
+                choices: ['Venta', 'Compra','Devolucion','Main Menu', 'Salir'],
+            },
+        ]);
+
+        switch(opcion) {
+            case 'Venta':
+                await transaccionVenta();
+                break;
+            case 'Compra':
+                await transaccionCompra();
+                break;
+            case 'Devolucion':
+                await transaccionDevolucion();
+                break;
+            case 'Main Menu':
+                await main();
+                break;
+            case 'Salir':
+                process.exit(0);
+                break;
+        }
+
+    }
+
 
 }
+
+async function transaccionVenta(){
+    //obtener datos de la venta
+    const transaccion = await obtenerDatosVenta();
+    //inventario.addTransaccion(transaccion);
+
+}
+
+async function transaccionCompra(){
+    //const transaccion = await obtenerDatosTransaccion();
+    //inventario.addTransaccion(transaccion);
+}
+
+async function transaccionDevolucion(){
+
+    //const transaccion = await obtenerDatosTransaccion();
+    //inventario.addTransaccion(transaccion);
+}
+
+async function obtenerDatosVenta(){
+    const { idInvolucrado, fecha, bienes, valor } = await inquirer.prompt([
+        //{ type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
+        //{ type: 'input', name: 'nombre', message: 'Nombre:' },
+        { type: 'input', name: 'idInvolucrado', message: 'Id del cliente:', filter: input => parseInt(input)}, 
+        { type: 'input', name: 'fecha', message: 'Fecha:' }, 
+        { type: 'input', name: 'idien', message: 'Id delBien:', filter: input => parseInt(input) }, 
+        { type: 'input', name: 'valor', message: 'Valor:', filter: input => parseInt(input) }, 
+    ]);
+    //return new Transaccion(id, nombre, descripcion, material, peso, valor);
+
+    const id = inventario.idTransaccion();
+    console.log(id);
+    const tipo = "venta";
+
+    //return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
+}
+
 
 main();

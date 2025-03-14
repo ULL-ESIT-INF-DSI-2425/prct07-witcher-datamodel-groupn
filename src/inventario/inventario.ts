@@ -48,8 +48,8 @@ export class Inventario {
         //db.read();
         //db.data.bienes.push(bien);
 
-        if(isNaN(bien.id) || isNaN(bien.peso) || isNaN(bien.valor)){
-            console.log("Error. ID, peso y valor deben ser tipo number.");
+        if( isNaN(bien.peso) || isNaN(bien.valor)){
+            console.log("Error. peso y valor deben ser tipo number.");
             return;
         }
 
@@ -251,6 +251,54 @@ export class Inventario {
         }
     }
     /**
+     * Método para obtener los clientes que se llamen de una forma específica
+     * @param nombre - Nombre de los clientes a buscar
+     * @returns - Los clientes con dicho nombre o null si no hay ninguno que se llame así
+     */
+    getClientesPorNombre(nombre: string) {
+        db.read();
+        const clientes = db.data?.clientes.find((b: Cliente) => b.nombre === nombre);
+        if (clientes) {
+            return clientes;
+        } else {
+            console.log("No existe ningún cliente con ese nombre.");
+            return null;
+        }
+    }
+
+    /**
+     * Método para obtener los clientes que sean de una raza especifica
+     * @param raza - Raza de los clientes a buscar
+     * @returns - Los clientes que sean de dicha raza o null si no hay ninguno que sea de la raza indicada
+     */
+    getClientesPorRaza(raza: string) {
+        db.read();
+        const clientes = db.data?.clientes.find((b: Cliente) => b.raza === raza);
+        if (clientes) {
+            return clientes;
+        } else {
+            console.log("No existe ningún cliente de esa raza.");
+            return null;
+        }
+    }
+
+    /**
+     * Método para obtener los clientes que estén en una ubicación especifica
+     * @param ubicacion - Ubicación de los clientes a buscar
+     * @returns - Los clientes que estén en dicha ubicación o null si no hay ninguno que esté en la ubicación indicada
+     */
+    getClientesPorUbicacion(ubicacion: string) {
+        db.read();
+        const clientes = db.data?.clientes.find((b: Cliente) => b.ubicacion === ubicacion);
+        if (clientes) {
+            return clientes;
+        } else {
+            console.log("No existe ningún cliente en dicha ubicación.");
+            return null;
+        }
+    }
+
+    /**
      * Método para actualizar un cliente en la base de datos
      * @param id - ID del cliente a actualizar
      * @param nuevosDatos - Nuevos datos del cliente
@@ -353,6 +401,31 @@ export class Inventario {
     
         console.log(`Cliente con ID ${id} ha sido eliminado correctamente.`);
     }
+
+    addTransaccion(transaccion: Transaccion){
+        /* añadir a la base de datos según el tipo de transaccion
+            idInvolucrado: venta -> cliente.   compra -> mercader.    devolucion->cliente | mercader.
+        */
+    }
+
+    idTransaccion(): number{
+        db.read();
+
+        //let nextId: number = 0;
+
+        let ultimoId = db.data?.transacciones.length;
+
+        if (ultimoId === 0 || ultimoId === undefined) {
+            let nextId = 1;
+            return nextId;
+        }  else {
+            let nextId = ultimoId + 1;
+            return nextId;
+        }
+
+        //return nextId;
+    }
+
 
     
     

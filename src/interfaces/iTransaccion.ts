@@ -5,7 +5,7 @@ export interface iTransaccion {
     tipo: "venta" | "compra" | "devolucion",
     idInvolucrado: number, //venta -> cliente.   compra -> mercader.    devolucion->cliente | mercader. 
     fecha: string,
-    bienes: Bien[],
+    bien: Bien,
     valor: number
 }
 
