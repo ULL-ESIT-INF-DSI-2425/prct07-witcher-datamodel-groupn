@@ -82,13 +82,11 @@ async function gestionarBienes(){
         }
 
     }
-
-
 }
 /**
  * Añade un nuevo bien al inventario.
  */
-async function addBien() {
+export async function addBien() {
     const bien = await obtenerDatosBien();
     inventario.addBien(bien);
 }
@@ -139,7 +137,7 @@ async function addBien() {
 /**
  * Consulta bienes en el inventario según distintos criterios.
  */
-async function consultarBienes() {
+export async function consultarBienes() {
     const { criterio } = await inquirer.prompt([
         {
             type: 'list',
@@ -178,7 +176,7 @@ async function consultarBienes() {
 /**
  * Elimina un bien del inventario por su ID.
  */
-async function removeBien() {
+export async function removeBien() {
     const { id } = await inquirer.prompt([
         {
             type: 'input',
@@ -193,31 +191,34 @@ async function removeBien() {
 /**
  * Modifica un bien existente en el inventario.
  */
-async function modificarBien() {
+export async function modificarBien() {
     const { id } = await inquirer.prompt([
-        {
-            type: 'input',
-            name: 'id',
-            message: 'Ingrese el ID del bien a modificar:',
-            validate: input => isNaN(Number(input)) ? "Debe ingresar un número válido." : true
-        }
+      {
+        type: 'input',
+        name: 'id',
+        message: 'Ingrese el ID del bien a modificar:',
+        validate: input => isNaN(Number(input)) ? "Debe ingresar un número válido." : true
+      }
     ]);
     
     const bien = inventario.getBienPorId(Number(id));
     if (!bien) {
-        console.log("Bien no encontrado.");
-        return;
+      console.log("Bien no encontrado.");
+      return;
     }
     
     console.log("Datos actuales:", bien);
-    const nuevosDatos = await obtenerDatosBien();
+    // Se pasa el ID del bien para preservar el identificador original.
+    const nuevosDatos = await obtenerDatosBien(bien.id);
     inventario.updateBien(Number(id), nuevosDatos);
-}
+  }
 /**
  * Solicita al usuario los datos de un bien.
  */
-async function obtenerDatosBien() {
-    const id = inventario.ultimoIdBien();
+export async function obtenerDatosBien(id?: number) {
+    if (id === undefined) {
+        id = inventario.ultimoIdBien();
+    }
     const { nombre, descripcion, material, peso, valor } = await inquirer.prompt([
         { type: 'input', name: 'nombre', message: 'Nombre:' },
         { type: 'input', name: 'descripcion', message: 'Descripción:' }, 
@@ -794,7 +795,6 @@ async function obtenerDatosCompra(){
     //const bien = inventario.getBienPorId(bienId);
     //console.log(bien);
     if(bien) {
-        const valor = bien.valor;
         return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
     } else {
         return undefined;
