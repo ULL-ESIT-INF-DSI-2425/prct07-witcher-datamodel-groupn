@@ -31,7 +31,7 @@ vi.mock("../src/inventario/inventario", () => ({
 
 describe("Gestión de bienes con Inquirer", () => {
   test("Debe agregar un bien al inventario", async () => {
-    /*const { addBien } = await import("../src/inquirer/inquirer");
+    const { addBien } = await import("../src/inquirer/inquirer");
 
     vi.mocked(inquirer.prompt).mockResolvedValueOnce({
       nombre: "Espada de Plata",
@@ -55,10 +55,10 @@ describe("Gestión de bienes con Inquirer", () => {
       material: "Plata",
       peso: 2,
       valor: 300,
-    });*/
+    });
   });
 
-  /*test("Debe consultar bienes en el inventario", async () => {
+  test("Debe consultar bienes en el inventario", async () => {
     const { consultarBienes } = await import("../src/inquirer/inquirer");
 
     const bienesMock = [
@@ -73,18 +73,18 @@ describe("Gestión de bienes con Inquirer", () => {
     await consultarBienes();
 
     expect(mockInventario.getBienes).toHaveBeenCalledTimes(1);
-  });*/
+  });
 
-  /*test("Debe eliminar un bien del inventario", async () => {
+  test("Debe eliminar un bien del inventario", async () => {
     const { removeBien } = await import("../src/inquirer/inquirer");
 
     vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "1" });
 
     await removeBien();
     expect(mockInventario.removeBien).toHaveBeenCalledWith(1);
-  });*/
+  });
 
-  /*test("Debe modificar un bien en el inventario", async () => {
+  test("Debe modificar un bien en el inventario", async () => {
     const { modificarBien } = await import("../src/inquirer/inquirer");
 
     const bienMock = new Bien(
@@ -120,5 +120,5 @@ describe("Gestión de bienes con Inquirer", () => {
       peso: 3,
       valor: 400,
     });
-  });*/
+  });
 });

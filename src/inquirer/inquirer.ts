@@ -8,7 +8,7 @@ import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
 import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
-import { addAbortListener } from "events";
+//import { addAbortListener } from "events";
 /**
  *  Objeto que representa el inventario de la tienda
  */
@@ -860,4 +860,4 @@ async function obtenerDatosDevolucion(){
 
 
 
-main();
+//main();

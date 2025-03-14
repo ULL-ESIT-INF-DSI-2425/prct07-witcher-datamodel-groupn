@@ -47,6 +47,14 @@
       "material": "das",
       "peso": 135,
       "valor": 543
+    },
+    {
+      "id": 13,
+      "nombre": "nombrenew",
+      "descripcion": "adg",
+      "material": "gg",
+      "peso": 123,
+      "valor": 1234
     }
   ],
   "mercaderes": [
