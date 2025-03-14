@@ -3,8 +3,9 @@ import { Bien } from "../src/elements/Bien"
 import { Mercader } from "../src/elements/Mercader"
 import { Cliente } from "../src/elements/Cliente"
 import { Transaccion } from "../src/elements/Transaccion";
-import { lowdb } from "../src/db/lowdb";
-import { inquirer } from "../src/inquirer/inquirer";
+//import inquirer from "inquirer";
+//import { lowdb } from "../src/db/lowdb";
+//import { inquirer } from "../src/inquirer/inquirer";
 import { Inventario } from "../src/inventario/inventario";
 
 /**
