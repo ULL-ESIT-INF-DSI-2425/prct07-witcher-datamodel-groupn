@@ -514,6 +514,117 @@ export class Inventario {
     }
 
 
-    
+    informeIngresosGastos(): {ingresos:number, gastos: number} {
+
+        let ingresos: number = 0;
+        let gastos: number = 0;
+
+        db.data?.transacciones.forEach(transaccion => {
+            if (transaccion.tipo === "venta") {
+                ingresos += transaccion.valor;
+            } else if (transaccion.tipo === "compra") {
+                gastos += transaccion.valor;
+            }
+        });
+
+
+        return { ingresos, gastos };
+
+
+    }
+
+    informeHistorico(id_usuario: number, tipo: string): (Transaccion | TransaccionDevolucion)[] {
+
+        let result: (Transaccion | TransaccionDevolucion)[] = [];
+
+        if (tipo === "Cliente"){
+
+            db.data?.transacciones.forEach(transaccion => {
+                if (transaccion.tipo === "venta" && transaccion.idInvolucrado === id_usuario) {
+                    result.push(transaccion);
+                } else if(transaccion.tipo === "devolucion" && transaccion.idInvolucrado === id_usuario) {
+                    if("devolucion" in transaccion) {
+                        if(transaccion.devolucion === "Cliente") {
+                            result.push(transaccion);
+                        }
+                    }
+                }
+            });
+
+        } else if (tipo === "Mercader"){
+
+            db.data?.transacciones.forEach(transaccion => {
+                if (transaccion.tipo === "compra" && transaccion.idInvolucrado === id_usuario) {
+                    result.push(transaccion);
+                } else if(transaccion.tipo === "devolucion" && transaccion.idInvolucrado === id_usuario) {
+                    if("devolucion" in transaccion) {
+                        if(transaccion.devolucion === "Mercader") {
+                            result.push(transaccion);
+                        }
+                    }
+                }
+            });
+
+        }
+
+        return result;
+        
+
+
+    }
+
+    informeStock(idBien: number): number{
+        let result: number = 0;
+
+        let bien = this.getBienPorId(idBien);
+
+        if (bien) {
+            db.data?.bienes.forEach(element => {
+                if(element.nombre === bien?.nombre) {
+                    result++;
+                }
+            });
+        }         
+
+        return result;
+    }
+
+    informeMasVendidos(): {nombre: string, cantidad: number}[]{
+        const conteo: Record<string, number> = {};
+
+        db.data?.transacciones.forEach(transaccion => {
+            if (transaccion.tipo === "venta") {
+                let bienNombre = transaccion.bien.nombre;
+
+                if(!conteo[bienNombre]) {
+                    conteo[bienNombre] = 0;
+                }
+                conteo[bienNombre]++;
+            }
+        });
+        
+        return Object.entries(conteo)
+            .map(([nombre, cantidad]) => ({nombre, cantidad}))
+            .sort((a, b) => b.cantidad - a.cantidad);
+    }
+
+    informeMasComprados(): {nombre: string, cantidad: number}[]{
+        const conteo: Record<string, number> = {};
+
+        db.data?.transacciones.forEach(transaccion => {
+            if (transaccion.tipo === "compra") {
+                let bienNombre = transaccion.bien.nombre;
+
+                if(!conteo[bienNombre]) {
+                    conteo[bienNombre] = 0;
+                }
+                conteo[bienNombre]++;
+            }
+        });
+        
+        return Object.entries(conteo)
+            .map(([nombre, cantidad]) => ({nombre, cantidad}))
+            .sort((a, b) => b.cantidad - a.cantidad);
+    }
     
 }

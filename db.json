@@ -33,14 +33,6 @@
       "valor": 1234
     },
     {
-      "id": 11,
-      "nombre": "bienComprado",
-      "descripcion": "descComprado",
-      "material": "matComprado",
-      "peso": 124,
-      "valor": 412
-    },
-    {
       "id": 12,
       "nombre": "nombreDev",
       "descripcion": "dad",
@@ -55,6 +47,30 @@
       "material": "gg",
       "peso": 123,
       "valor": 1234
+    },
+    {
+      "id": 14,
+      "nombre": "5",
+      "descripcion": "5",
+      "material": "5",
+      "peso": 5,
+      "valor": 5
+    },
+    {
+      "id": 15,
+      "nombre": "12",
+      "descripcion": "12",
+      "material": "12",
+      "peso": 12,
+      "valor": 12
+    },
+    {
+      "id": 16,
+      "nombre": "12",
+      "descripcion": "12",
+      "material": "12",
+      "peso": 12,
+      "valor": 12
     }
   ],
   "mercaderes": [
@@ -69,6 +85,12 @@
       "nombre": "10",
       "tipo": "10",
       "ubicacion": "10"
+    },
+    {
+      "id": 5,
+      "nombre": "mercader5",
+      "tipo": "tipo",
+      "ubicacion": "ubi"
     }
   ],
   "clientes": [
@@ -316,6 +338,53 @@
       },
       "valor": 543,
       "devolucion": "Cliente"
+    },
+    {
+      "id": 16,
+      "tipo": "devolucion",
+      "idInvolucrado": 5,
+      "fecha": "3213",
+      "bien": {
+        "id": 14,
+        "nombre": "5",
+        "descripcion": "5",
+        "material": "5",
+        "peso": 5,
+        "valor": 5
+      },
+      "valor": 5,
+      "devolucion": "Cliente"
+    },
+    {
+      "id": 17,
+      "tipo": "devolucion",
+      "idInvolucrado": 5,
+      "fecha": "123",
+      "bien": {
+        "id": 11,
+        "nombre": "bienComprado",
+        "descripcion": "descComprado",
+        "material": "matComprado",
+        "peso": 124,
+        "valor": 412
+      },
+      "valor": 412,
+      "devolucion": "Mercader"
+    },
+    {
+      "id": 18,
+      "tipo": "compra",
+      "idInvolucrado": 5,
+      "fecha": "12",
+      "bien": {
+        "id": 16,
+        "nombre": "12",
+        "descripcion": "12",
+        "material": "12",
+        "peso": 12,
+        "valor": 12
+      },
+      "valor": 12
     }
   ]
 }

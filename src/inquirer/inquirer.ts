@@ -23,7 +23,7 @@ export async function main() {
                 type: 'list', 
                 name: 'opcion',
                 message: 'Seleccione una opcion: ',
-                choices: ['Gestionar Bienes', 'Gestionar Mercaderes', 'Gestionar Clientes', 'Transacciones', 'Salir'],
+                choices: ['Gestionar Bienes', 'Gestionar Mercaderes', 'Gestionar Clientes', 'Transacciones', 'Informes', 'Salir'],
             },
         ]);
 
@@ -39,6 +39,9 @@ export async function main() {
                 break;
             case 'Transacciones':
                 await gestionarTransaccion();
+                break;
+            case 'Informes':
+                await gestionarInformes();
                 break;
             case 'Salir':
                 process.exit(0);
@@ -856,6 +859,120 @@ async function obtenerDatosDevolucion(){
     }
     
 }
+
+async function gestionarInformes(){
+    while (true) {
+        const { opcion } = await inquirer.prompt([
+            {
+                type: 'list', 
+                name: 'opcion',
+                message: 'Seleccione una opcion: ',
+                choices: ['Stock de un bien', 'Bienes más vendidos', 'Bienes más comprados','Total de ingresos y gastos', 'Histórico transacciones cliente o mercader', 'Main Menu', 'Salir'],
+            },
+        ]);
+
+        switch(opcion) {
+            case 'Stock de un bien':
+                await informeStockBien();
+                break;
+            case 'Bienes más vendidos':
+                await console.log(inventario.informeMasVendidos());
+                break;
+            case 'Bienes más comprados':
+                await console.log(inventario.informeMasComprados());
+                break;
+            case 'Total de ingresos y gastos':
+                await console.log(inventario.informeIngresosGastos());
+                break;
+            case 'Histórico transacciones cliente o mercader':
+                await informeHistorial();
+                break;
+            case 'Main Menu':
+                await main();
+                break;
+            case 'Salir':
+                process.exit(0);
+                break;
+        }
+
+    }
+
+
+}
+
+
+async function informeStockBien(){
+    
+    let { idBien } = await inquirer.prompt([
+        { type: 'input', name: 'idBien', message: 'Id del Bien:', filter: input => parseInt(input)}, 
+    ]);
+        
+    console.log("Stock total: ");
+    console.log(inventario.informeStock(idBien));
+
+        
+
+}
+
+async function informeHistorial(){
+    while (true) {
+        const { opcion } = await inquirer.prompt([
+            {
+                type: 'list', 
+                name: 'opcion',
+                message: 'Seleccione una opcion: ',
+                choices: ['Cliente', 'Mercader', 'Main Menu', 'Salir'],
+            },
+        ]);
+
+        //let idUsuario: number = 0;
+
+        let idUsuario:number = 0;
+
+        if (opcion === "Cliente" || opcion === "Mercader"){
+            ({ idUsuario } = await inquirer.prompt([
+                { type: 'input', name: 'idUsuario', message: 'Id del Cliente o Mercader:', filter: input => parseInt(input)}, 
+            ]));
+        }
+
+        switch(opcion) {
+            case 'Cliente':
+                //console.log(idUsuario);
+                await console.log(inventario.informeHistorico(idUsuario, "Cliente"));
+                break;
+            case 'Mercader':
+                //console.log(idUsuario);
+                await console.log(inventario.informeHistorico(idUsuario, "Mercader"));
+                break;
+            case 'Main Menu':
+                await main();
+                break;
+            case 'Salir':
+                process.exit(0);
+                break;
+        }
+
+    }
+
+}
+
+
+
+
+
+/*
+async function informeIngresosGastos(){
+    //obtener datos de la venta
+    const transaccion = await obtenerDatosVenta();
+    if (transaccion) {
+        inventario.addTransaccion(transaccion);
+        inventario.removeBien(transaccion.bien.id);
+    } else {
+        console.log("Error. Bien no encontrado.");
+    }
+    //inventario.addTransaccion(transaccion);
+
+}*/
 
 
 
