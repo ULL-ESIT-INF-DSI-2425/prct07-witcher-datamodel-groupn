@@ -169,21 +169,6 @@
       "valor": 222
     },
     {
-      "id": 5,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "23",
-      "bien": {
-        "id": 7,
-        "nombre": "npmre",
-        "descripcion": "nrsda",
-        "material": "das",
-        "peso": null,
-        "valor": 23
-      },
-      "valor": 23
-    },
-    {
       "id": 6,
       "tipo": "compra",
       "idInvolucrado": 1,

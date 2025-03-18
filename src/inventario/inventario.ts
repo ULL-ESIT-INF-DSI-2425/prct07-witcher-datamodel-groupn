@@ -11,6 +11,105 @@ import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
 export class Inventario {
     //constructor(){initDB();}
     constructor(){}
+
+    estadoDB(): boolean{
+        
+        let valido: boolean = true;
+
+        if(db.data?.bienes) {
+            db.data.bienes.forEach((bien: Bien, index: number) => {
+                if(!this.validarBien(bien)) {
+                    console.log(bien);
+                    console.log("Error formato en bienes.");
+                    valido = false;
+                }
+            });
+        }
+
+        if(db.data?.clientes) {
+            db.data.clientes.forEach((cliente: Cliente, index: number) => {
+                if(!this.validarCliente(cliente)) {
+                    console.log(cliente);
+                    console.log("Error formato en clientes.");
+                    valido = false;
+                }
+            });
+        }
+
+        if(db.data?.mercaderes) {
+            db.data.mercaderes.forEach((mercader: Mercader, index: number) => {
+                if(!this.validarMercader(mercader)) {
+                    console.log(mercader);
+                    console.log("Error formato en mercaderes.");
+                    valido = false;
+                }
+            });
+        }
+
+        if(db.data?.transacciones) {
+            db.data.transacciones.forEach((transaccion: Transaccion, index: number) => {
+                if(!this.validarTransaccion(transaccion)) {
+                    console.log(transaccion);
+                    console.log("Error formato en transacciones.");
+                    valido = false;
+                }
+            });
+        }
+
+
+        return valido;
+    }
+
+    validarBien(bien: Bien): boolean {
+
+        return bien &&
+            typeof bien.id === "number" &&
+            typeof bien.nombre === "string" &&
+            typeof bien.descripcion === "string" &&
+            typeof bien.material === "string" &&
+            typeof bien.peso === "number" &&
+            typeof bien.valor === "number";
+    }
+
+    validarCliente(cliente: Cliente): boolean {
+
+        return cliente &&
+            typeof cliente.id === "number" &&
+            typeof cliente.nombre === "string" &&
+            typeof cliente.raza === "string" &&
+            typeof cliente.ubicacion === "string";
+    }
+
+    validarMercader(mercader: Mercader): boolean {
+
+        return mercader &&
+            typeof mercader.id === "number" &&
+            typeof mercader.nombre === "string" &&
+            typeof mercader.tipo === "string" &&
+            typeof mercader.ubicacion === "string";
+    }
+
+    validarTransaccion(transaccion: Transaccion | TransaccionDevolucion): boolean {
+
+        let result: boolean = transaccion &&
+            typeof transaccion.id === "number" &&
+            (transaccion.tipo === "venta" || transaccion.tipo === "compra" || transaccion.tipo === "devolucion") &&
+            typeof transaccion.idInvolucrado === "number" &&
+            typeof transaccion.fecha === "string" &&
+            this.validarBien(transaccion.bien) &&
+            typeof transaccion.valor === "number";
+
+            if (transaccion.tipo === "devolucion") {
+                if("devolucion" in transaccion){
+                    result = result && (transaccion.devolucion === "Cliente" || transaccion.devolucion === "Mercader");
+                }
+            }
+
+            return result;
+    }
+
+    
+
     /**
      * Método para inicializar la base de datos
      */

@@ -17,6 +17,7 @@ const inventario = new Inventario();
  * Función principal que inicia el menú de la tienda
  */
 export async function main() {
+    
     while (true) {
         const { opcion }  = await inquirer.prompt([
             {

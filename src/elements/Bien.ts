@@ -10,7 +10,6 @@ import { IBien } from "../interfaces/iBien.js";
  * @returns Bien
  */
 export class Bien implements IBien{
-    public stock: number;
     constructor(
         public id: number,
         public nombre: string,
