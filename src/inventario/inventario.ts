@@ -12,6 +12,10 @@ export class Inventario {
     //constructor(){initDB();}
     constructor(){}
 
+    /**
+     * Método para validar la estructura de la base de datos
+     * @returns - Valor tue o false, que indica si está o no bien estructurada la base de datos
+     */
     estadoDB(): boolean{
         
         let valido: boolean = true;
@@ -60,6 +64,11 @@ export class Inventario {
         return valido;
     }
 
+    /**
+     * Valida si un bien es válido o no según su tipo de datos
+     * @param bien - El bien a validar
+     * @returns True si es válido o false si no lo es
+     */
     validarBien(bien: Bien): boolean {
 
         return bien &&
@@ -71,6 +80,11 @@ export class Inventario {
             typeof bien.valor === "number";
     }
 
+    /**
+     * Valida si un cliente es válido o no según su tipo de datos
+     * @param cliente - Cliente a validar
+     * @returns True si es válido o false si no lo es
+     */
     validarCliente(cliente: Cliente): boolean {
 
         return cliente &&
@@ -80,6 +94,11 @@ export class Inventario {
             typeof cliente.ubicacion === "string";
     }
 
+    /**
+     * Valida si un mercader es válido o no según su tipo de datos
+     * @param mercader Mercader a validar
+     * @returns True si es válido o false si no lo es
+     */
     validarMercader(mercader: Mercader): boolean {
 
         return mercader &&
@@ -89,6 +108,11 @@ export class Inventario {
             typeof mercader.ubicacion === "string";
     }
 
+    /**
+     * Valida si una transacción es válida o no según sus atributos
+     * @param transaccion - Transacción que se quiere validar
+     * @returns True si es válido o false si no lo es
+     */
     validarTransaccion(transaccion: Transaccion | TransaccionDevolucion): boolean {
 
         let result: boolean = transaccion &&
@@ -108,8 +132,6 @@ export class Inventario {
             return result;
     }
 
-    
-
     /**
      * Método para inicializar la base de datos
      */
@@ -118,6 +140,7 @@ export class Inventario {
         db.read();
         return db.data;
     }
+
     /**
      * Método para obtener todos los bienes de la base de datos
      * @returns - Lista de bienes o null si no hay bienes
@@ -126,6 +149,7 @@ export class Inventario {
         db.read();
         return db.data?.bienes || null;
     }
+
     /**
      * Método para obtener todos los mercaderes de la base de datos
      * @returns - Lista de mercaderes o null si no hay mercaderes
@@ -134,6 +158,7 @@ export class Inventario {
         db.read();
         return db.data?.mercaderes || null;
     }
+
     /**
      * Método para obtener todos los clientes de la base de datos
      * @returns - Lista de clientes o null si no hay clientes
@@ -142,6 +167,7 @@ export class Inventario {
         db.read();
         return db.data?.clientes || null;
     }
+
     /**
      * Método para agregar un bien a la base de datos
      * @param bien - Bien a agregar
@@ -165,6 +191,7 @@ export class Inventario {
         //db.data?.bienes.push(bien);
         //db.write();
     }
+
     /**
      * Método para agregar un mercader a la base de datos
      * @param mercader - Mercader a agregar
@@ -188,6 +215,7 @@ export class Inventario {
         //db.data?.bienes.push(bien);
         //db.write();
     }
+
     /**
      * Método para agregar un cliente a la base de datos
      * @param cliente - Cliente a agregar
@@ -274,6 +302,7 @@ export class Inventario {
             return null;
         }
     }
+
     /**
      * Método para actualizar un bien en la base de datos
      * @param id - ID del bien a actualizar
@@ -298,6 +327,7 @@ export class Inventario {
             console.log("Error al actualizar el bien.");
         }
     }
+
     /**
      * Método para obtener un mercader por su ID
      * @param id - ID del mercader a buscar
@@ -313,6 +343,7 @@ export class Inventario {
             return null;
         }
     }
+
     /**
      * Método para actualizar un mercader en la base de datos
      * @param id - ID del mercader a actualizar
@@ -337,6 +368,7 @@ export class Inventario {
             console.log("Error al actualizar el mercader.");
         }
     }
+
     /**
      * Método para obtener un cliente por su ID
      * @param id - ID del cliente a buscar
@@ -352,6 +384,7 @@ export class Inventario {
             return null;
         }
     }
+
     /**
      * Método para obtener los clientes que se llamen de una forma específica
      * @param nombre - Nombre de los clientes a buscar
@@ -424,11 +457,7 @@ export class Inventario {
             console.log("Error al actualizar el cliente.");
         }
     }
-    //removeBien(bien: Bien){
-    //    db.read();
-        //if(db.data?.bienes)
 
-    //}
     /**
      * Método para eliminar un bien de la base de datos
      * @param id - ID del bien a eliminar
@@ -453,6 +482,7 @@ export class Inventario {
     
         console.log(`Bien con ID ${id} ha sido eliminado correctamente.`);
     }
+
     /**
      * Método para eliminar un mercader de la base de datos
      * @param id - ID del mercader a eliminar
@@ -478,6 +508,7 @@ export class Inventario {
     
         console.log(`Mercader con ID ${id} ha sido eliminado correctamente.`);
     }
+    
     /**
      * Método para eliminar un cliente de la base de datos
      * @param id - ID del cliente a eliminar
@@ -503,6 +534,7 @@ export class Inventario {
     
         console.log(`Cliente con ID ${id} ha sido eliminado correctamente.`);
     }
+
     /**
      * Método para obtener todas las transacciones de la base de datos
      * @param transaccion - Transacción a agregar
@@ -567,10 +599,10 @@ export class Inventario {
             
             
         }
+
         return false;
-
-
     }
+
     /**
      * @returns - Lista de transacciones o null si no hay transacciones
      */
@@ -585,34 +617,41 @@ export class Inventario {
             }
         });
         if (ultimoId === 0 || ultimoId === undefined) {
-            let nextId = 1;
+            const nextId = 1;
             return nextId;
         }  else {
-            let nextId = ultimoId + 1;
+            const nextId = ultimoId + 1;
             return nextId;
         }
 
     }
 
+    /**
+     * Método para obtener el ID de la transacción que se realiza
+     * @returns ID de la transacción
+     */
     idTransaccion(): number{
         db.read();
 
         //let nextId: number = 0;
 
-        let ultimoId = db.data?.transacciones.length;
+        const ultimoId = db.data?.transacciones.length;
 
         if (ultimoId === 0 || ultimoId === undefined) {
-            let nextId = 1;
+            const nextId = 1;
             return nextId;
         }  else {
-            let nextId = ultimoId + 1;
+            const nextId = ultimoId + 1;
             return nextId;
         }
 
         //return nextId;
     }
 
-
+    /**
+     * Método para obtener un informe de ingresos y gastos totales
+     * @returns Informe de ingresos y gastos totales
+     */
     informeIngresosGastos(): {ingresos:number, gastos: number} {
 
         let ingresos: number = 0;
@@ -626,15 +665,18 @@ export class Inventario {
             }
         });
 
-
         return { ingresos, gastos };
-
-
     }
 
+    /**
+     * Método para obtener un informe de todas las transacciones que un mercader o cliente han tenido
+     * @param id_usuario - ID del cliente o mercader para el cual se quiere el informe
+     * @param tipo - Valor que puede tomar o 'mercader' o 'cliente' dependiendo del informe deseado
+     * @returns Informe histórico de transacciones
+     */
     informeHistorico(id_usuario: number, tipo: string): (Transaccion | TransaccionDevolucion)[] {
 
-        let result: (Transaccion | TransaccionDevolucion)[] = [];
+        const result: (Transaccion | TransaccionDevolucion)[] = [];
 
         if (tipo === "Cliente"){
 
@@ -667,15 +709,17 @@ export class Inventario {
         }
 
         return result;
-        
-
-
     }
 
+    /**
+     * Método para obtener un informe para saber el stock de un bien
+     * @param idBien - ID del bien para el cual se quiere comprobar el stock
+     * @returns Informe del stock del bien que se quiere comprobar
+     */
     informeStock(idBien: number): number{
         let result: number = 0;
 
-        let bien = this.getBienPorId(idBien);
+        const bien = this.getBienPorId(idBien);
 
         if (bien) {
             db.data?.bienes.forEach(element => {
@@ -688,12 +732,16 @@ export class Inventario {
         return result;
     }
 
+    /**
+     * Método que genera un informe con los bienes más vendidos
+     * @returns Informe de bienes
+     */
     informeMasVendidos(): {nombre: string, cantidad: number}[]{
         const conteo: Record<string, number> = {};
 
         db.data?.transacciones.forEach(transaccion => {
             if (transaccion.tipo === "venta") {
-                let bienNombre = transaccion.bien.nombre;
+                const bienNombre = transaccion.bien.nombre;
 
                 if(!conteo[bienNombre]) {
                     conteo[bienNombre] = 0;
@@ -707,12 +755,16 @@ export class Inventario {
             .sort((a, b) => b.cantidad - a.cantidad);
     }
 
+    /**
+     * Método que genera un informe con los bienes más comprados
+     * @returns Informe de bienes más comprados
+     */
     informeMasComprados(): {nombre: string, cantidad: number}[]{
         const conteo: Record<string, number> = {};
 
         db.data?.transacciones.forEach(transaccion => {
             if (transaccion.tipo === "compra") {
-                let bienNombre = transaccion.bien.nombre;
+                const bienNombre = transaccion.bien.nombre;
 
                 if(!conteo[bienNombre]) {
                     conteo[bienNombre] = 0;

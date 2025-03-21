@@ -9,10 +9,12 @@ import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
 import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
 //import { addAbortListener } from "events";
+
 /**
  *  Objeto que representa el inventario de la tienda
  */
 const inventario = new Inventario();
+
 /**
  * Función principal que inicia el menú de la tienda
  */
@@ -50,6 +52,7 @@ export async function main() {
         }
     }
 }
+
 /**
  * Función que gestiona los bienes de la tienda
  */
@@ -87,6 +90,7 @@ async function gestionarBienes(){
 
     }
 }
+
 /**
  * Añade un nuevo bien al inventario.
  */
@@ -138,6 +142,7 @@ export async function addBien() {
 //     const bien = new Bien(id, nombre, descripcion, material, peso, valor);
 //     inventario.addBien(bien);
 // }
+
 /**
  * Consulta bienes en el inventario según distintos criterios.
  */
@@ -177,6 +182,7 @@ export async function consultarBienes() {
     }
     console.log(bienes);
 }
+
 /**
  * Elimina un bien del inventario por su ID.
  */
@@ -192,6 +198,7 @@ export async function removeBien() {
 
     inventario.removeBien(Number(id));
 }
+
 /**
  * Modifica un bien existente en el inventario.
  */
@@ -215,7 +222,8 @@ export async function modificarBien() {
     // Se pasa el ID del bien para preservar el identificador original.
     const nuevosDatos = await obtenerDatosBien(bien.id);
     inventario.updateBien(Number(id), nuevosDatos);
-  }
+}
+
 /**
  * Solicita al usuario los datos de un bien.
  */
@@ -232,6 +240,7 @@ export async function obtenerDatosBien(id?: number) {
     ]);
     return new Bien( id, nombre, descripcion, material, peso, valor);
 }
+
 /**
  * Menú interactivo para gestionar mercaderes.
  */
@@ -274,6 +283,7 @@ async function gestionarMercaderes(){
 
 
 }
+
 /**
  * Añade un nuevo mercader al inventario.
  */
@@ -281,6 +291,7 @@ async function addMercader() {
     const mercader = await obtenerDatosMercader();
     inventario.addMercader(mercader);
 }
+
 /**
  * Consulta la lista de mercaderes registrados.
  */
@@ -319,6 +330,7 @@ async function localizarMercader() {
             break;
     }
 }
+
 /**
  * Muestra los mercaderes que tengan el nombre especificado
  */
@@ -373,8 +385,6 @@ async function localizarMercaderPorUbicacion() {
     }
 }
 
-
-
 // async function addMercader(){
 //     const { id, nombre, tipo, ubicacion  } = await inquirer.prompt([
 //         {
@@ -407,6 +417,7 @@ async function localizarMercaderPorUbicacion() {
 //     const mercader = new Mercader(id, nombre, tipo, ubicacion);
 //     inventario.addMercader(mercader);
 // }
+
 /**
  * Elimina un mercader del inventario por su ID.
  */
@@ -422,6 +433,7 @@ async function removeMercader() {
 
     inventario.removeMercader(Number(id));
 }
+
 /**
  * Modifica los datos de un mercader existente.
  */
@@ -445,6 +457,7 @@ async function modificarMercader() {
     const nuevosDatos = await obtenerDatosMercader();
     inventario.updateMercader(Number(id), nuevosDatos);
 }
+
 /**
  * Solicita al usuario los datos de un mercader.
  * @returns \{Mercader\} Objeto de tipo Mercader con los datos ingresados.
@@ -496,11 +509,9 @@ async function gestionarClientes(){
                 process.exit(0);
                 break;
         }
-
     }
-
-
 }
+
 /**
  * Añade un nuevo cliente al inventario.
  */
@@ -652,6 +663,7 @@ async function removeCliente() {
 
     inventario.removeCliente(clienteId);
 }
+
 /**
  * Modifica los datos de un cliente existente.
  */
@@ -675,6 +687,7 @@ async function modificarCliente() {
     const nuevosDatos = await obtenerDatosCliente();
     inventario.updateCliente(Number(id), nuevosDatos);
 }
+
 /**
  * Solicita al usuario los datos de un cliente.
  * @returns Cliente Objeto de tipo Cliente con los datos ingresados.
@@ -689,6 +702,9 @@ async function obtenerDatosCliente() {
     return new Cliente(id, nombre, raza, ubicacion);
 }
 
+/**
+ * Función que gestiona las transacciones
+ */
 async function gestionarTransaccion(){
 while (true) {
         const { opcion } = await inquirer.prompt([
@@ -723,6 +739,9 @@ while (true) {
 
 }
 
+/**
+ * Función que destiona las transacciones de bienes vendidos
+ */
 async function transaccionVenta(){
     //obtener datos de la venta
     const transaccion = await obtenerDatosVenta();
@@ -736,6 +755,9 @@ async function transaccionVenta(){
 
 }
 
+/**
+ * Función que destiona las transacciones de bienes comprados
+ */
 async function transaccionCompra(){
     const transaccion = await obtenerDatosCompra();
     if (transaccion) {
@@ -749,20 +771,21 @@ async function transaccionCompra(){
     //inventario.addTransaccion(transaccion);
 }
 
+/**
+ * Función que destiona las transacciones de bienes devueltos
+ */
 async function transaccionDevolucion(){
-
-
     const transaccion = await obtenerDatosDevolucion();
     if (transaccion) {
         // FUNCIONAMIENTO DEVOLUCION: dev de un cliente, añadimos el bien a la db. dev a un mercader, eliminamos el bien de la db.
         if(transaccion.devolucion === "Cliente") {
-            let result = inventario.addTransaccion(transaccion);
+            const result = inventario.addTransaccion(transaccion);
             if (result) {
                 inventario.addBien(transaccion.bien);
             }
             
         } else if(transaccion.devolucion === "Mercader") {
-            let result = inventario.addTransaccion(transaccion);
+            const result = inventario.addTransaccion(transaccion);
             if (result) {
                 inventario.removeBien(transaccion.bien.id);
             }
@@ -771,10 +794,13 @@ async function transaccionDevolucion(){
         
     } else {
         console.log("Error. Bien no encontrado.");
-    }
-    
+    }  
 }
 
+/**
+ * Función que obtiene los datos de una venta de un bien
+ * @returns Datos de la venta de un bien o 'undefined' si no existe.
+ */
 async function obtenerDatosVenta(){
     const { idInvolucrado, fecha, bienId } = await inquirer.prompt([
         
@@ -784,13 +810,11 @@ async function obtenerDatosVenta(){
         
     ]);
     
-
     const id = inventario.idTransaccion();
     
     const tipo = "venta";
     const bien = inventario.getBienPorId(bienId);
 
-    
     if(bien) {
         const valor = bien.valor;
         return new Transaccion(id, tipo, idInvolucrado, fecha, bien, valor);
@@ -799,6 +823,10 @@ async function obtenerDatosVenta(){
     }
 }
 
+/**
+ * Función que obtiene los datos de una compra de un bien
+ * @returns Datos de la compra de un bien o 'undefined' si no existe.
+ */
 async function obtenerDatosCompra(){
 
     const { idMercader, fecha } = await inquirer.prompt([
@@ -814,13 +842,17 @@ async function obtenerDatosCompra(){
     const bien = await obtenerDatosBien();
     
     if(bien && !isNaN(bien.peso) && !isNaN(bien.valor) ) {
-        let valor = bien.valor;
+        const valor = bien.valor;
         return new Transaccion(id, tipo, idMercader, fecha, bien, valor);
     } else {
         return undefined;
     }
 }
 
+/**
+ * Función que obtiene los datos de una devolución de un bien
+ * @returns Datos de la devolución de un bien o 'undefined' si no existe.
+ */
 async function obtenerDatosDevolucion(){
 
     const { dev, idInvolucrado, fecha, bienId } = await inquirer.prompt([
@@ -861,6 +893,9 @@ async function obtenerDatosDevolucion(){
     
 }
 
+/**
+ * Función que gestiona los diferentes informes que se pueden pedir
+ */
 async function gestionarInformes(){
     while (true) {
         const { opcion } = await inquirer.prompt([
@@ -895,26 +930,25 @@ async function gestionarInformes(){
                 process.exit(0);
                 break;
         }
-
     }
-
-
 }
 
-
+/**
+ * Función para la obtención de un informe de stock de un bien
+ */
 async function informeStockBien(){
     
-    let { idBien } = await inquirer.prompt([
+    const { idBien } = await inquirer.prompt([
         { type: 'input', name: 'idBien', message: 'Id del Bien:', filter: input => parseInt(input)}, 
     ]);
         
     console.log("Stock total: ");
     console.log(inventario.informeStock(idBien));
-
-        
-
 }
 
+/**
+ * Función para la obtención de un informe con el historial de transacciones de un mercader o cliente en específico
+ */
 async function informeHistorial(){
     while (true) {
         const { opcion } = await inquirer.prompt([
@@ -952,9 +986,7 @@ async function informeHistorial(){
                 process.exit(0);
                 break;
         }
-
     }
-
 }
 
 

@@ -71,6 +71,14 @@
       "material": "12",
       "peso": 12,
       "valor": 12
+    },
+    {
+      "id": 17,
+      "nombre": "1",
+      "descripcion": "1",
+      "material": "1",
+      "peso": 1,
+      "valor": 1
     }
   ],
   "mercaderes": [
@@ -370,6 +378,21 @@
         "valor": 12
       },
       "valor": 12
+    },
+    {
+      "id": 18,
+      "tipo": "compra",
+      "idInvolucrado": 1,
+      "fecha": "21",
+      "bien": {
+        "id": 17,
+        "nombre": "1",
+        "descripcion": "1",
+        "material": "1",
+        "peso": 1,
+        "valor": 1
+      },
+      "valor": 1
     }
   ]
 }

@@ -3,14 +3,14 @@ import { Cliente } from "./elements/Cliente.js";
 import { Mercader } from "./elements/Mercader.js";
 import { Inventario } from "./inventario/inventario.js";
 
-let prueba = new Inventario;
+const prueba = new Inventario;
 
 //prueba.getAll();
 
 //console.log(prueba.getAll());
 //console.log("BIEN: ");
 
-let bien3 = new Bien(6, "bien6", "desc6", "mat6", 3, 10);
+const bien3 = new Bien(6, "bien6", "desc6", "mat6", 3, 10);
 
 console.log(prueba.getAll());
 prueba.addBien(bien3);
