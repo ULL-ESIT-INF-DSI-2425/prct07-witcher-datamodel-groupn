@@ -26,7 +26,10 @@ beforeEach(() => {
     getMercaderes: vi.fn(),
     getMercaderesPorNombre: vi.fn(),
     getMercaderesPorTipo: vi.fn(),
-    getMercaderesPorUbicacion: vi.fn()
+    getMercaderesPorUbicacion: vi.fn(),
+    removeMercader: vi.fn(),
+    getMercaderPorId: vi.fn(),
+    updateMercader: vi.fn()
   };
 });
 
@@ -249,5 +252,53 @@ describe("Gestión de mercaderes con Inquirer", () => {
 
     await localizarMercaderPorUbicacion();
     expect(mockInventario.getMercaderesPorUbicacion).toHaveBeenCalledWith("Oxenfurt");
+  });
+
+  test("Debe eliminar un mercader por ID", async () => {
+    const { removeMercader } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "10" });
+
+    await removeMercader();
+
+    expect(mockInventario.removeMercader).toHaveBeenCalledWith(10);
+  });
+
+  test("Debe modificar un mercader existente", async () => {
+    const { modificarMercader } = await import("../src/inquirer/inquirer");
+
+    const mercaderExistente = new Mercader(5, "Hattori", "Herrero", "Novigrado");
+    mockInventario.getMercaderPorId.mockReturnValue(mercaderExistente);
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "5" });
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      id: 5,
+      nombre: "Hattori",
+      tipo: "Maestro Herrero",
+      ubicacion: "Novigrado"
+    });
+
+    await modificarMercader();
+
+    expect(mockInventario.updateMercader).toHaveBeenCalledWith(
+      5,
+      expect.objectContaining({
+        nombre: "Hattori",
+        tipo: "Maestro Herrero",
+        ubicacion: "Novigrado"
+      })
+    );
+  });
+
+  test("Debe mostrar mensaje si no se encuentra el mercader", async () => {
+    const { modificarMercader } = await import("../src/inquirer/inquirer");
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    mockInventario.getMercaderPorId.mockReturnValue(undefined);
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "999" });
+
+    await modificarMercader();
+
+    expect(logSpy).toHaveBeenCalledWith("Mercader no encontrado.");
   });
 });
