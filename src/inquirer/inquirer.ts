@@ -742,7 +742,7 @@ while (true) {
 /**
  * Función que destiona las transacciones de bienes vendidos
  */
-async function transaccionVenta(){
+export async function transaccionVenta(){
     //obtener datos de la venta
     const transaccion = await obtenerDatosVenta();
     if (transaccion) {
@@ -758,7 +758,7 @@ async function transaccionVenta(){
 /**
  * Función que destiona las transacciones de bienes comprados
  */
-async function transaccionCompra(){
+export async function transaccionCompra(){
     const transaccion = await obtenerDatosCompra();
     if (transaccion) {
 
@@ -774,7 +774,7 @@ async function transaccionCompra(){
 /**
  * Función que destiona las transacciones de bienes devueltos
  */
-async function transaccionDevolucion(){
+export async function transaccionDevolucion(){
     const transaccion = await obtenerDatosDevolucion();
     if (transaccion) {
         // FUNCIONAMIENTO DEVOLUCION: dev de un cliente, añadimos el bien a la db. dev a un mercader, eliminamos el bien de la db.
@@ -801,7 +801,7 @@ async function transaccionDevolucion(){
  * Función que obtiene los datos de una venta de un bien
  * @returns Datos de la venta de un bien o 'undefined' si no existe.
  */
-async function obtenerDatosVenta(){
+export async function obtenerDatosVenta(){
     const { idInvolucrado, fecha, bienId } = await inquirer.prompt([
         
         { type: 'input', name: 'idInvolucrado', message: 'Id del cliente:', filter: input => parseInt(input)}, 
@@ -827,7 +827,7 @@ async function obtenerDatosVenta(){
  * Función que obtiene los datos de una compra de un bien
  * @returns Datos de la compra de un bien o 'undefined' si no existe.
  */
-async function obtenerDatosCompra(){
+export async function obtenerDatosCompra(){
 
     const { idMercader, fecha } = await inquirer.prompt([
         { type: 'input', name: 'idMercader', message: 'Id del Mercader:', filter: input => parseInt(input)}, 
@@ -853,7 +853,7 @@ async function obtenerDatosCompra(){
  * Función que obtiene los datos de una devolución de un bien
  * @returns Datos de la devolución de un bien o 'undefined' si no existe.
  */
-async function obtenerDatosDevolucion(){
+export async function obtenerDatosDevolucion(){
 
     const { dev, idInvolucrado, fecha, bienId } = await inquirer.prompt([
         
@@ -896,7 +896,7 @@ async function obtenerDatosDevolucion(){
 /**
  * Función que gestiona los diferentes informes que se pueden pedir
  */
-async function gestionarInformes(){
+export async function gestionarInformes(){
     while (true) {
         const { opcion } = await inquirer.prompt([
             {
@@ -936,7 +936,7 @@ async function gestionarInformes(){
 /**
  * Función para la obtención de un informe de stock de un bien
  */
-async function informeStockBien(){
+export async function informeStockBien(){
     
     const { idBien } = await inquirer.prompt([
         { type: 'input', name: 'idBien', message: 'Id del Bien:', filter: input => parseInt(input)}, 
@@ -949,7 +949,7 @@ async function informeStockBien(){
 /**
  * Función para la obtención de un informe con el historial de transacciones de un mercader o cliente en específico
  */
-async function informeHistorial(){
+export async function informeHistorial(){
     while (true) {
         const { opcion } = await inquirer.prompt([
             {

@@ -1,8 +1,9 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import inquirer from "inquirer";
-import { Bien } from "../src/elements/Bien";
-import { Mercader } from "../src/elements/Mercader";
-import { Cliente } from "../src/elements/Cliente";
+import { Bien } from "../src/elements/Bien.js";
+import { Mercader } from "../src/elements/Mercader.js";
+import { Cliente } from "../src/elements/Cliente.js";
+import { Transaccion, TransaccionDevolucion } from "../src/elements/Transaccion.js";
 
 // Se mofa la librería Inquirer, incluyendo la exportación por defecto.
 vi.mock("inquirer", () => ({
@@ -39,7 +40,10 @@ beforeEach(() => {
     getClientesPorUbicacion: vi.fn(),
     removeCliente: vi.fn(),
     getClientePorId: vi.fn(),
-    updateCliente: vi.fn()
+    updateCliente: vi.fn(),
+    // Transacciones
+    addTransaccion: vi.fn(),
+    idTransaccion: vi.fn()
   };
 });
 
@@ -416,5 +420,135 @@ describe("Gestión de clientes con Inquirer", () => {
 
     await modificarCliente();
     expect(logSpy).toHaveBeenCalledWith("Cliente no encontrado.");
+  });
+});
+
+// Pruebas para la gestión de transacciones
+describe("Gestión de transacciones", () => {
+  test("Debe registrar una venta y eliminar el bien del inventario", async () => {
+    // Import dinámico del método a probar
+    const { transaccionVenta } = await import("../src/inquirer/inquirer");
+
+    // Simulamos que el inventario encuentra un Bien (id=1)
+    const bienMock = { id: 1, valor: 150 };
+    mockInventario.getBienPorId.mockReturnValue(bienMock);
+
+    // Asignamos un ID de transacción ficticio
+    mockInventario.idTransaccion.mockReturnValue(100);
+
+    // El prompt pide datos: idInvolucrado, fecha y bienId
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      idInvolucrado: 1,
+      fecha: "2025-04-01",
+      bienId: 1,
+    });
+
+    // Ejecutamos la transacción de venta
+    await transaccionVenta();
+
+    // Verificamos que se haya registrado la transacción
+    expect(mockInventario.addTransaccion).toHaveBeenCalled();
+    // y que se elimine el Bien del inventario
+    expect(mockInventario.removeBien).toHaveBeenCalledWith(1);
+  });
+
+  test("Debe registrar una compra y añadir el bien al inventario", async () => {
+    const mod = await import("../src/inquirer/inquirer");
+
+    // Bien simulado que se comprará
+    const bien = { id: 2, valor: 200, peso: 1 };
+
+    // Primero, Inquirer pide ID del mercader
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ idMercader: 2 });
+    // Luego, la fecha
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ fecha: "2025-04-02" });
+
+    // Inventario genera un ID de transacción
+    mockInventario.idTransaccion.mockReturnValue(101);
+
+    // 4) Convertimos "mod.obtenerDatosBien" en un mock real para usar .mockResolvedValueOnce
+    const obtenerDatosBienMock = vi.fn().mockResolvedValueOnce(bien);
+    (mod as any).obtenerDatosBien = obtenerDatosBienMock;
+
+    // Ejecutamos la transacción de compra
+    await mod.transaccionCompra();
+
+    // Se añade la transacción y también el bien al inventario
+    expect(mockInventario.addTransaccion).toHaveBeenCalled();
+    expect(mockInventario.addBien).toHaveBeenCalledWith(bien);
+  });
+
+  test("Debe procesar una devolución de cliente y añadir el bien al inventario", async () => {
+    const mod = await import("../src/inquirer/inquirer");
+    // Bien devuelto por un cliente
+    const bien = { id: 3, valor: 300, peso: 2 };
+
+    // Inquirer pide "dev", "idInvolucrado", "fecha"
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      dev: "Cliente",
+      idInvolucrado: 5,
+      fecha: "2025-04-03",
+    });
+
+    // Inventario genera ID de transacción
+    mockInventario.idTransaccion.mockReturnValue(102);
+
+    // obtemos los datos del Bien con "obtenerDatosBien"
+    const obtenerDatosBienMock = mod.obtenerDatosBien as unknown as ReturnType<typeof vi.fn>;
+    obtenerDatosBienMock.mockResolvedValueOnce(bien);
+
+    // Ejecutamos la transacción de devolución
+    await mod.transaccionDevolucion();
+
+    // Verificamos que se añade la transacción y se añade el bien
+    expect(mockInventario.addTransaccion).toHaveBeenCalled();
+    expect(mockInventario.addBien).toHaveBeenCalledWith(bien);
+  });
+  
+  test("Debe procesar una devolución a mercader y eliminar el bien del inventario", async () => {
+    // Importamos solo la función necesaria
+    const { transaccionDevolucion } = await import("../src/inquirer/inquirer");
+    const bien = { id: 4, valor: 400, peso: 3 };
+
+    // 1er prompt: dev=Mercader, idInvolucrado=7, fecha
+    vi.mocked(inquirer.prompt)
+      .mockResolvedValueOnce({
+        dev: "Mercader",
+        idInvolucrado: 7,
+        fecha: "2025-04-04",
+      })
+      // 2do prompt: bienId=4
+      .mockResolvedValueOnce({ bienId: 4 });
+
+    // Asignamos un ID de transacción
+    mockInventario.idTransaccion.mockReturnValue(103);
+    // Este bien está presente en el inventario
+    mockInventario.getBienPorId.mockReturnValue(bien);
+
+    // Ejecutamos la devolución
+    await transaccionDevolucion();
+
+    // Esperamos que se haya registrado la transacción y eliminado el bien
+    expect(mockInventario.addTransaccion).toHaveBeenCalled();
+    expect(mockInventario.removeBien).toHaveBeenCalledWith(4);
+  });
+
+  test("Debe mostrar error si no se encuentra el bien en la venta", async () => {
+    const { transaccionVenta } = await import("../src/inquirer/inquirer");
+    // Espiamos los logs de consola para verificar mensaje de error
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    // No se encuentra el bien
+    mockInventario.getBienPorId.mockReturnValue(undefined);
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      idInvolucrado: 9,
+      fecha: "2025-04-05",
+      bienId: 999,
+    });
+
+    await transaccionVenta();
+
+    expect(logSpy).toHaveBeenCalledWith("Error. Bien no encontrado.");
   });
 });
