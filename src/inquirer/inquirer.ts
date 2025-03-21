@@ -244,7 +244,7 @@ export async function obtenerDatosBien(id?: number) {
 /**
  * Menú interactivo para gestionar mercaderes.
  */
-async function gestionarMercaderes(){
+export async function gestionarMercaderes(){
     while (true) {
         const { opcion } = await inquirer.prompt([
             {
@@ -287,7 +287,7 @@ async function gestionarMercaderes(){
 /**
  * Añade un nuevo mercader al inventario.
  */
-async function addMercader() {
+export async function addMercader() {
     const mercader = await obtenerDatosMercader();
     inventario.addMercader(mercader);
 }
@@ -295,14 +295,14 @@ async function addMercader() {
 /**
  * Consulta la lista de mercaderes registrados.
  */
-async function consultarMercaderes() {
+export async function consultarMercaderes() {
     console.log(inventario.getMercaderes());
 }
 
 /**
  * Consulta el criterio a la hora de buscar información sobre un mercader
  */
-async function localizarMercader() {
+export async function localizarMercader() {
     const { criterio } = await inquirer.prompt([
         {
             type: 'list',
@@ -334,7 +334,7 @@ async function localizarMercader() {
 /**
  * Muestra los mercaderes que tengan el nombre especificado
  */
-async function localizarMercaderPorNombre() {
+export async function localizarMercaderPorNombre() {
     const { nombre } = await inquirer.prompt([
         {
             type: 'input',
@@ -352,7 +352,7 @@ async function localizarMercaderPorNombre() {
 /**
  * Muestra los mercaderes que tengan el tipo especificado
  */
-async function localizarMercaderPorTipo() {
+export async function localizarMercaderPorTipo() {
     const { tipo } = await inquirer.prompt([
         {
             type: 'input',
@@ -370,7 +370,7 @@ async function localizarMercaderPorTipo() {
 /**
  * Muestra los mercaderes que se encuentren en la ubicación especificada
  */
-async function localizarMercaderPorUbicacion() {
+export async function localizarMercaderPorUbicacion() {
     const { ubicacion } = await inquirer.prompt([
         {
             type: 'input',
@@ -421,7 +421,7 @@ async function localizarMercaderPorUbicacion() {
 /**
  * Elimina un mercader del inventario por su ID.
  */
-async function removeMercader() {
+export async function removeMercader() {
     const { id } = await inquirer.prompt([
         {
             type: 'input',
@@ -437,7 +437,7 @@ async function removeMercader() {
 /**
  * Modifica los datos de un mercader existente.
  */
-async function modificarMercader() {
+export async function modificarMercader() {
     const { id } = await inquirer.prompt([
         {
             type: 'input',
@@ -462,7 +462,7 @@ async function modificarMercader() {
  * Solicita al usuario los datos de un mercader.
  * @returns \{Mercader\} Objeto de tipo Mercader con los datos ingresados.
  */
-async function obtenerDatosMercader() {
+export async function obtenerDatosMercader() {
     const { id, nombre, tipo, ubicacion } = await inquirer.prompt([
         { type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
         { type: 'input', name: 'nombre', message: 'Nombre:' },

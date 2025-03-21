@@ -1,6 +1,7 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import inquirer from "inquirer";
 import { Bien } from "../src/elements/Bien";
+import { Mercader } from "../src/elements/Mercader";
 
 // Se mofa la librería Inquirer, incluyendo la exportación por defecto.
 vi.mock("inquirer", () => ({
@@ -19,7 +20,13 @@ beforeEach(() => {
     removeBien: vi.fn(),
     updateBien: vi.fn(),
     getBienPorId: vi.fn(),
-    ultimoIdBien: vi.fn()
+    ultimoIdBien: vi.fn(),
+    // Mercaderes
+    addMercader: vi.fn(),
+    getMercaderes: vi.fn(),
+    getMercaderesPorNombre: vi.fn(),
+    getMercaderesPorTipo: vi.fn(),
+    getMercaderesPorUbicacion: vi.fn()
   };
 });
 
@@ -176,3 +183,71 @@ describe("Gestión de bienes con Inquirer", () => {
   });
 });
 
+// Ahora pasamos a realizar las pruebas de los mercaderes
+
+describe("Gestión de mercaderes con Inquirer", () => {
+  test("Debe añadir un mercader al inventario", async () => {
+    const { addMercader } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      id: 1,
+      nombre: "Hattori",
+      tipo: "Herrero",
+      ubicacion: "Novigrado"
+    });
+
+    await addMercader();
+
+    expect(mockInventario.addMercader).toHaveBeenCalledWith({
+      id: 1,
+      nombre: "Hattori",
+      tipo: "Herrero",
+      ubicacion: "Novigrado"
+    });
+  });
+
+  test("Debe consultar la lista de mercaderes", async () => {
+    const { consultarMercaderes } = await import("../src/inquirer/inquirer");
+
+    const mercaderesMock = [
+      new Mercader(1, "Hattori", "Herrero", "Novigrado")
+    ];
+    mockInventario.getMercaderes.mockReturnValue(mercaderesMock);
+
+    await consultarMercaderes();
+    expect(mockInventario.getMercaderes).toHaveBeenCalled();
+  });
+
+  test("Debe localizar mercaderes por nombre", async () => {
+    const { localizarMercaderPorNombre } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ nombre: "Hattori" });
+    const resultadoMock = [new Mercader(1, "Hattori", "Herrero", "Novigrado")];
+    mockInventario.getMercaderesPorNombre.mockReturnValue(resultadoMock);
+
+    await localizarMercaderPorNombre();
+    expect(mockInventario.getMercaderesPorNombre).toHaveBeenCalledWith("Hattori");
+  });
+
+  test("Debe localizar mercaderes por tipo", async () => {
+    const { localizarMercaderPorTipo } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ tipo: "Herrero" });
+    const resultadoMock = [new Mercader(2, "Yoana", "Herrero", "Kaer Trolde")];
+    mockInventario.getMercaderesPorTipo.mockReturnValue(resultadoMock);
+
+    await localizarMercaderPorTipo();
+    expect(mockInventario.getMercaderesPorTipo).toHaveBeenCalledWith("Herrero");
+  });
+
+  test("Debe localizar mercaderes por ubicación", async () => {
+    const { localizarMercaderPorUbicacion } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ ubicacion: "Oxenfurt" });
+    const resultadoMock = [new Mercader(3, "Bram", "Tabernero", "Oxenfurt")];
+    mockInventario.getMercaderesPorUbicacion.mockReturnValue(resultadoMock);
+
+    await localizarMercaderPorUbicacion();
+    expect(mockInventario.getMercaderesPorUbicacion).toHaveBeenCalledWith("Oxenfurt");
+  });
+});
