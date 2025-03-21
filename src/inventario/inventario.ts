@@ -96,7 +96,7 @@ export class Inventario {
 
     /**
      * Valida si un mercader es válido o no según su tipo de datos
-     * @param mercader Mercader a validar
+     * @param mercader - Mercader a validar
      * @returns True si es válido o false si no lo es
      */
     validarMercader(mercader: Mercader): boolean {

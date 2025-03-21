@@ -121,4 +121,58 @@ describe("Gestión de bienes con Inquirer", () => {
       valor: 400,
     });
   });
+
+  test("Debe solicitar los datos al usuario y usar un ID generado si no se proporciona", async () => {
+    // Simular datos del prompt
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      nombre: "Espada de Acero",
+      descripcion: "Espada reforzada",
+      material: "Acero",
+      peso: 3,
+      valor: 200
+    });
+
+    // Simular último ID generado
+    mockInventario.ultimoIdBien.mockReturnValue(99);
+
+    // Importar función después de mocks
+    const { obtenerDatosBien } = await import("../src/inquirer/inquirer");
+
+    const bien = await obtenerDatosBien();
+
+    expect(mockInventario.ultimoIdBien).toHaveBeenCalled();
+    expect(bien).toMatchObject({
+      id: 99,
+      nombre: "Espada de Acero",
+      descripcion: "Espada reforzada",
+      material: "Acero",
+      peso: 3,
+      valor: 200
+    });
+  });
+
+  test("Debe aceptar un ID proporcionado y no llamar a ultimoIdBien", async () => {
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      nombre: "Espada de Plata",
+      descripcion: "Espada para monstruos",
+      material: "Plata",
+      peso: 2,
+      valor: 300
+    });
+
+    const { obtenerDatosBien } = await import("../src/inquirer/inquirer");
+
+    const bien = await obtenerDatosBien(42);
+
+    expect(mockInventario.ultimoIdBien).not.toHaveBeenCalled();
+    expect(bien).toMatchObject({
+      id: 42,
+      nombre: "Espada de Plata",
+      descripcion: "Espada para monstruos",
+      material: "Plata",
+      peso: 2,
+      valor: 300
+    });
+  });
 });
+
