@@ -475,8 +475,8 @@ export async function obtenerDatosMercader() {
 /**
  * Menú interactivo para gestionar clientes.
  */
-async function gestionarClientes(){
-    while (true) {
+export async function gestionarClientes(){
+   while (true) {
         const { opcion } = await inquirer.prompt([
             {
                 type: 'list', 
@@ -515,7 +515,7 @@ async function gestionarClientes(){
 /**
  * Añade un nuevo cliente al inventario.
  */
-async function addCliente() {
+export async function addCliente() {
     const cliente = await obtenerDatosCliente();
     inventario.addCliente(cliente);
 }
@@ -556,14 +556,14 @@ async function addCliente() {
 /**
  * Consulta la lista de clientes registrados.
  */
-async function consultarClientes() {
+export async function consultarClientes() {
     console.log(inventario.getClientes());
 }
 
 /**
  * Consulta el criterio a la hora de buscar información sobre un cliente
  */
-async function localizarCliente() {
+export async function localizarCliente() {
     const { criterio } = await inquirer.prompt([
         {
             type: 'list',
@@ -595,7 +595,7 @@ async function localizarCliente() {
 /**
  * Muestra los clientes que tengan el nombre especificado
  */
-async function localizarClientePorNombre() {
+export async function localizarClientePorNombre() {
     const { nombre } = await inquirer.prompt([
         {
             type: 'input',
@@ -613,7 +613,7 @@ async function localizarClientePorNombre() {
 /**
  * Muestra los clientes que tengan la raza especificada
  */
-async function localizarClientePorRaza() {
+export async function localizarClientePorRaza() {
     const { raza } = await inquirer.prompt([
         {
             type: 'input',
@@ -631,7 +631,7 @@ async function localizarClientePorRaza() {
 /**
  * Muestra los clientes que esten en la ubicación especificada
  */
-async function localizarClientePorUbicacion() {
+export async function localizarClientePorUbicacion() {
     const { ubicacion } = await inquirer.prompt([
         {
             type: 'input',
@@ -649,7 +649,7 @@ async function localizarClientePorUbicacion() {
 /**
  * Elimina un cliente del inventario por su ID.
  */
-async function removeCliente() {
+export async function removeCliente() {
     const { id } = await inquirer.prompt([
         {
             type: 'input',
@@ -667,7 +667,7 @@ async function removeCliente() {
 /**
  * Modifica los datos de un cliente existente.
  */
-async function modificarCliente() {
+export async function modificarCliente() {
     const { id } = await inquirer.prompt([
         {
             type: 'input',
@@ -692,7 +692,7 @@ async function modificarCliente() {
  * Solicita al usuario los datos de un cliente.
  * @returns Cliente Objeto de tipo Cliente con los datos ingresados.
  */
-async function obtenerDatosCliente() {
+export async function obtenerDatosCliente() {
     const { id, nombre, raza, ubicacion } = await inquirer.prompt([
         { type: 'input', name: 'id', message: 'ID:', filter: input => parseInt(input) },
         { type: 'input', name: 'nombre', message: 'Nombre:' },
@@ -705,7 +705,7 @@ async function obtenerDatosCliente() {
 /**
  * Función que gestiona las transacciones
  */
-async function gestionarTransaccion(){
+export async function gestionarTransaccion(){
 while (true) {
         const { opcion } = await inquirer.prompt([
             {

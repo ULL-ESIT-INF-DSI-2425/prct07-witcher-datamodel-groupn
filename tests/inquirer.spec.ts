@@ -2,6 +2,7 @@ import { describe, test, expect, vi, beforeEach } from "vitest";
 import inquirer from "inquirer";
 import { Bien } from "../src/elements/Bien";
 import { Mercader } from "../src/elements/Mercader";
+import { Cliente } from "../src/elements/Cliente";
 
 // Se mofa la librería Inquirer, incluyendo la exportación por defecto.
 vi.mock("inquirer", () => ({
@@ -29,7 +30,16 @@ beforeEach(() => {
     getMercaderesPorUbicacion: vi.fn(),
     removeMercader: vi.fn(),
     getMercaderPorId: vi.fn(),
-    updateMercader: vi.fn()
+    updateMercader: vi.fn(),
+    // Clientes
+    addCliente: vi.fn(),
+    getClientes: vi.fn(),
+    getClientesPorNombre: vi.fn(),
+    getClientesPorRaza: vi.fn(),
+    getClientesPorUbicacion: vi.fn(),
+    removeCliente: vi.fn(),
+    getClientePorId: vi.fn(),
+    updateCliente: vi.fn()
   };
 });
 
@@ -300,5 +310,111 @@ describe("Gestión de mercaderes con Inquirer", () => {
     await modificarMercader();
 
     expect(logSpy).toHaveBeenCalledWith("Mercader no encontrado.");
+  });
+});
+
+// Pruebas para la gestión de clientes
+
+describe("Gestión de clientes con Inquirer", () => {
+  test("Debe añadir un cliente al inventario", async () => {
+    const { addCliente } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      id: 1,
+      nombre: "Geralt",
+      raza: "Brujo",
+      ubicacion: "Kaer Morhen"
+    });
+
+    await addCliente();
+    expect(mockInventario.addCliente).toHaveBeenCalledWith({
+      id: 1,
+      nombre: "Geralt",
+      raza: "Brujo",
+      ubicacion: "Kaer Morhen"
+    });
+  });
+
+  test("Debe consultar la lista de clientes", async () => {
+    const { consultarClientes } = await import("../src/inquirer/inquirer");
+
+    mockInventario.getClientes.mockReturnValue([
+      new Cliente(1, "Geralt", "Brujo", "Kaer Morhen")
+    ]);
+
+    await consultarClientes();
+    expect(mockInventario.getClientes).toHaveBeenCalled();
+  });
+
+  test("Debe localizar clientes por nombre", async () => {
+    const { localizarClientePorNombre } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ nombre: "Yennefer" });
+    mockInventario.getClientesPorNombre.mockReturnValue([new Cliente(2, "Yennefer", "Humana", "Vengerberg")]);
+
+    await localizarClientePorNombre();
+    expect(mockInventario.getClientesPorNombre).toHaveBeenCalledWith("Yennefer");
+  });
+
+  test("Debe localizar clientes por raza", async () => {
+    const { localizarClientePorRaza } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ raza: "Elfo" });
+    mockInventario.getClientesPorRaza.mockReturnValue([new Cliente(3, "Iorveth", "Elfo", "Bosque de Brokilon")]);
+
+    await localizarClientePorRaza();
+    expect(mockInventario.getClientesPorRaza).toHaveBeenCalledWith("Elfo");
+  });
+
+  test("Debe localizar clientes por ubicación", async () => {
+    const { localizarClientePorUbicacion } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ ubicacion: "Novigrado" });
+    mockInventario.getClientesPorUbicacion.mockReturnValue([new Cliente(4, "Triss", "Humana", "Novigrado")]);
+
+    await localizarClientePorUbicacion();
+    expect(mockInventario.getClientesPorUbicacion).toHaveBeenCalledWith("Novigrado");
+  });
+
+  test("Debe eliminar un cliente por ID", async () => {
+    const { removeCliente } = await import("../src/inquirer/inquirer");
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "10" });
+
+    await removeCliente();
+    expect(mockInventario.removeCliente).toHaveBeenCalledWith(10);
+  });
+
+  test("Debe modificar un cliente existente", async () => {
+    const { modificarCliente } = await import("../src/inquirer/inquirer");
+
+    const clienteMock = new Cliente(6, "Zoltan", "Enano", "Novigrado");
+    mockInventario.getClientePorId.mockReturnValue(clienteMock);
+
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "6" });
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({
+      id: 6,
+      nombre: "Zoltan Chivay",
+      raza: "Enano",
+      ubicacion: "Novigrado"
+    });
+
+    await modificarCliente();
+
+    expect(mockInventario.updateCliente).toHaveBeenCalledWith(
+      6,
+      expect.objectContaining({ nombre: "Zoltan Chivay" })
+    );
+  });
+
+  test("Debe mostrar mensaje si el cliente no existe", async () => {
+    const { modificarCliente } = await import("../src/inquirer/inquirer");
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    mockInventario.getClientePorId.mockReturnValue(undefined);
+    vi.mocked(inquirer.prompt).mockResolvedValueOnce({ id: "99" });
+
+    await modificarCliente();
+    expect(logSpy).toHaveBeenCalledWith("Cliente no encontrado.");
   });
 });
