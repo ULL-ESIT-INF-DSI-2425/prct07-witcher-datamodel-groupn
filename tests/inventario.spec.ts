@@ -170,6 +170,14 @@ describe("Inventario", () => {
         expect(inventario.addTransaccion).toHaveBeenCalledWith(transaccion);
     });
 
+    test("Debe registrar una transacción de una devolución correctamente", () => {
+        const bien = new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
+        const transaccion = new TransaccionDevolucion(1, "compra", 1, new Date().toISOString(), bien, 150,"Cliente");
+
+        inventario.addTransaccion(transaccion);
+        expect(inventario.addTransaccion).toHaveBeenCalledWith(transaccion);
+    });
+
     test("Debe obtener el ID de la última transacción", () => {
         inventario.idTransaccion();
         expect(inventario.idTransaccion).toHaveBeenCalled();
