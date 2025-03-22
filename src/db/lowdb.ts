@@ -22,15 +22,35 @@ type DataSchema = {
     transacciones: Transaccion[];
 }
 
-const adapter = new JSONFileSync<DataSchema>("db.json");
+/**
+ * Clase para el adaptador usada para los test, de forma que se hagan en memoria y no modifiquen la base de datos.
+ */
+class MemorySync<T> {
+    private data: T | null = null;
+  
+    read(): T | null {
+      return this.data;
+    }
+  
+    write(data: T): void {
+      this.data = data;
+    }
+  }
+
+//const adapter = new JSONFileSync<DataSchema>("db.json");
+
+// Seleccionar el adaptador según el entorno
+const adapter = process.env.NODE_ENV === "test" ? new MemorySync<DataSchema>() : new JSONFileSync<DataSchema>("db.json");
+ 
 const db = new LowSync(adapter);
 
-//export async function initDB() {
-//    await db.read();
-    db.read();
-    db.data ||= { bienes: [], mercaderes: [], clientes: [], transacciones: []};
-    db.write();
-//    await db.write();
-//}
+// const adapter = new JSONFileSync<DataSchema>("db.json");
+// const db = new LowSync(adapter);
+
+
+db.read();
+db.data ||= { bienes: [], mercaderes: [], clientes: [], transacciones: []};
+db.write();
+
 
 export {db};
