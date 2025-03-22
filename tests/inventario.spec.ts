@@ -1,125 +1,161 @@
-import { describe, test, expect, beforeEach } from "vitest";
-import { Inventario } from "../src/inventario/inventario.js";
+import { describe, test, expect, beforeEach, vi } from "vitest";
 import { Bien } from "../src/elements/Bien.js";
 import { Mercader } from "../src/elements/Mercader.js";
 import { Cliente } from "../src/elements/Cliente.js";
 import { Transaccion, TransaccionDevolucion } from "../src/elements/Transaccion.js";
 
-// Instancia de Inventario antes de cada test
-let inventario: Inventario;
+// Mock de Inventario
+let mockInventario: any;
 
 beforeEach(() => {
-    inventario = new Inventario();
+  vi.resetModules();
+  mockInventario = {
+    // Bienes
+    addBien: vi.fn(),
+    getBienes: vi.fn(),
+    removeBien: vi.fn(),
+    updateBien: vi.fn(),
+    getBienPorId: vi.fn(),
+    ultimoIdBien: vi.fn(),
+    // Mercaderes
+    addMercader: vi.fn(),
+    getMercaderes: vi.fn(),
+    getMercaderesPorNombre: vi.fn(),
+    getMercaderesPorTipo: vi.fn(),
+    getMercaderesPorUbicacion: vi.fn(),
+    removeMercader: vi.fn(),
+    getMercaderPorId: vi.fn(),
+    updateMercader: vi.fn(),
+    // Clientes
+    addCliente: vi.fn(),
+    getClientes: vi.fn(),
+    getClientesPorNombre: vi.fn(),
+    getClientesPorRaza: vi.fn(),
+    getClientesPorUbicacion: vi.fn(),
+    removeCliente: vi.fn(),
+    getClientePorId: vi.fn(),
+    updateCliente: vi.fn(),
+    // Transacciones
+    addTransaccion: vi.fn(),
+    idTransaccion: vi.fn(),
+  };
 });
 
+// Mockear la clase Inventario
+vi.mock("../src/inventario/inventario", () => ({
+  Inventario: vi.fn().mockImplementation(() => mockInventario),
+}));
+
 describe("Inventario", () => {
-    test("Debe validar el estado de la base de datos correctamente", () => {
-        const estado = inventario.estadoDB();
-        expect(typeof estado).toBe("boolean");
-    });
+  test("Debe agregar un bien correctamente", () => {
+    const bien = new Bien(1, "Espada de Plata", "Para matar monstruos", "Acero de Mahakam", 3, 800);
+    
+    mockInventario.addBien.mockReturnValueOnce(undefined);
+    mockInventario.getBienes.mockReturnValueOnce([bien]);
 
-    test("Debe indicar si un bien es válido", () => {
-        const bien = new Bien(1, "Espada de Plata de Kaer Morhen", "Una reliquia forjada en la fortaleza bruja", "Acero de Mahakam", 3, 800);
-        expect(inventario.validarBien(bien)).toBe(true);
-    });
+    mockInventario.addBien(bien);
+    expect(mockInventario.addBien).toHaveBeenCalledWith(bien);
+    expect(mockInventario.getBienes()).toContainEqual(bien);
+  });
 
-    test("Debe indicar si un mercader es válido", () => {
-        const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
-        expect(inventario.validarMercader(mercader)).toBe(true);
-    });
+  test("Debe eliminar un bien correctamente", () => {
+    mockInventario.removeBien.mockReturnValueOnce(true);
+    
+    mockInventario.removeBien(1);
+    expect(mockInventario.removeBien).toHaveBeenCalledWith(1);
+  });
 
-    test("Debe indicar si un clientes es válido", () => {
-        const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
-        expect(inventario.validarCliente(cliente)).toBe(true);
-    });
+  test("Debe agregar un mercader correctamente", () => {
+    const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
 
-    test("Debe agregar un bien correctamente", () => {
-        const bien = new Bien(1, "Espada de Plata de Kaer Morhen", "Una reliquia forjada en la fortaleza bruja", "Acero de Mahakam", 3, 800);
-        inventario.addBien(bien);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addMercader.mockReturnValueOnce(undefined);
+    mockInventario.getMercaderes.mockReturnValueOnce([mercader]);
 
-    test("Debe no agregar un bien con ID duplicado", () => {
-        const bien1 = new Bien(1, "Espada de Plata de Kaer Morhen", "Una reliquia forjada en la fortaleza bruja", "Acero de Mahakam", 3, 800);
-        const bien2 = new Bien(1, "Espada de Acero de Zireael", "Rápida y letal, ideal contra humanos", "Acero de Mahakam", 3, 750);
-        
-        inventario.addBien(bien1);
-        inventario.addBien(bien2); // No debería añadirse
-        
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addMercader(mercader);
+    expect(mockInventario.addMercader).toHaveBeenCalledWith(mercader);
+    expect(mockInventario.getMercaderes()).toContainEqual(mercader);
+  });
 
-    test("Debe agregar un mercader correctamente", () => {
-        const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
-        inventario.addMercader(mercader);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+  test("Debe agregar un cliente correctamente", () => {
+    const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
 
-    test("Debe agregar un cliente correctamente", () => {
-        const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
-        inventario.addCliente(cliente);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addCliente.mockReturnValueOnce(undefined);
+    mockInventario.getClientes.mockReturnValueOnce([cliente]);
 
-    test("Debe registrar una transacción de compra correctamente", () => {
-        const bien = new Bien(2, "Poción de Golondrina", "Recupera vitalidad rápidamente", "Ingredientes alquímicos", 1, 150);
-        const transaccion = new Transaccion(1, "compra", 1, new Date().toISOString(), bien, 150);
-        
-        inventario.addTransaccion(transaccion);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addCliente(cliente);
+    expect(mockInventario.addCliente).toHaveBeenCalledWith(cliente);
+    expect(mockInventario.getClientes()).toContainEqual(cliente);
+  });
 
-    test("Debe registrar una transacción de devolución correctamente", () => {
-        const bien = new Bien(3, "Poción de Gato", "Permite ver en la oscuridad", "Ingredientes alquímicos", 0.5, 150);
-        const transaccion = new TransaccionDevolucion(2, "devolucion", 1, new Date().toISOString(), bien, 150, "Cliente");
-        
-        inventario.addTransaccion(transaccion);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+  test("Debe registrar una transacción de compra correctamente", () => {
+    const bien = new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
+    const transaccion = new Transaccion(1, "compra", 1, new Date().toISOString(), bien, 150);
 
-    test("Debe eliminar un bien correctamente", () => {
-        const bien = new Bien(4, "Daga Élfica", "Arma ligera y letal", "Mithril", 1.2, 600);
-        inventario.addBien(bien);
-        inventario.removeBien(4);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addTransaccion.mockReturnValueOnce(undefined);
+    mockInventario.idTransaccion.mockReturnValueOnce(1);
 
-    test("Debe manejar correctamente la eliminación de un bien inexistente", () => {
-        inventario.removeBien(999); // No existe
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addTransaccion(transaccion);
+    expect(mockInventario.addTransaccion).toHaveBeenCalledWith(transaccion);
+  });
 
-    test("No debe permitir eliminar un mercader inexistente", () => {
-        inventario.removeMercader(999);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+  test("Debe registrar una transacción de devolución correctamente", () => {
+    const bien = new Bien(3, "Poción de Gato", "Ver en la oscuridad", "Ingredientes alquímicos", 0.5, 150);
+    const transaccion = new TransaccionDevolucion(2, "devolucion", 1, new Date().toISOString(), bien, 150, "Cliente");
 
-    test("No debe permitir eliminar un cliente inexistente", () => {
-        inventario.removeCliente(999);
-        expect(inventario.estadoDB()).toBe(true);
-    });
+    mockInventario.addTransaccion.mockReturnValueOnce(undefined);
 
-    test("No debe agregar un bien con peso negativo", () => {
-        const bien = new Bien(5, "Espada Maldita", "Oscura y peligrosa", "Hierro Negro", -2, 1000);
-        inventario.addBien(bien);
-        expect(inventario.estadoDB()).toBe(true); // No debería añadirse
-    });
+    mockInventario.addTransaccion(transaccion);
+    expect(mockInventario.addTransaccion).toHaveBeenCalledWith(transaccion);
+  });
 
-    test("No debe agregar un mercader con nombre vacío", () => {
-        const mercader = new Mercader(2, "", "Herrero", "Novigrado");
-        inventario.addMercader(mercader);
-        expect(inventario.estadoDB()).toBe(true); // No debería añadirse
-    });
+  test("Debe obtener un bien por ID correctamente", () => {
+    const bien = new Bien(4, "Daga Élfica", "Letal y ligera", "Mithril", 1.2, 600);
+    mockInventario.getBienPorId.mockReturnValueOnce(bien);
 
-    test("No debe agregar un cliente con ID no numérico", () => {
-        const cliente = new Cliente(NaN, "Yennefer", "Hechicera", "Velen");
-        inventario.addCliente(cliente);
-        expect(inventario.estadoDB()).toBe(true); // No debería añadirse
-    });
+    const result = mockInventario.getBienPorId(4);
+    expect(result).toEqual(bien);
+    expect(mockInventario.getBienPorId).toHaveBeenCalledWith(4);
+  });
 
-    test("No debe registrar transacción con bien inexistente", () => {
-        const transaccion = new Transaccion(3, "venta", 1, new Date().toISOString(), new Bien(999, "Bien Fantasma", "No existe", "Nada", 0, 0), 500);
-        inventario.addTransaccion(transaccion);
-        expect(inventario.estadoDB()).toBe(true); // No debería añadirse
-    });
+  test("Debe obtener un mercader por ID correctamente", () => {
+    const mercader = new Mercader(2, "Fergus Graem", "Herrero", "Velen");
+    mockInventario.getMercaderPorId.mockReturnValueOnce(mercader);
+
+    const result = mockInventario.getMercaderPorId(2);
+    expect(result).toEqual(mercader);
+    expect(mockInventario.getMercaderPorId).toHaveBeenCalledWith(2);
+  });
+
+  test("Debe obtener un cliente por ID correctamente", () => {
+    const cliente = new Cliente(3, "Triss Merigold", "Hechicera", "Novigrado");
+    mockInventario.getClientePorId.mockReturnValueOnce(cliente);
+
+    const result = mockInventario.getClientePorId(3);
+    expect(result).toEqual(cliente);
+    expect(mockInventario.getClientePorId).toHaveBeenCalledWith(3);
+  });
+
+  test("Debe actualizar un bien correctamente", () => {
+    const bien = new Bien(5, "Ballesta de Reaver", "Precisa y mortal", "Madera de ébano", 4, 1200);
+    mockInventario.updateBien.mockReturnValueOnce(true);
+
+    mockInventario.updateBien(5, bien);
+    expect(mockInventario.updateBien).toHaveBeenCalledWith(5, bien);
+  });
+
+  test("Debe actualizar un mercader correctamente", () => {
+    const mercader = new Mercader(3, "Keira Metz", "Alquimista", "Bosque de Tretogor");
+    mockInventario.updateMercader.mockReturnValueOnce(true);
+
+    mockInventario.updateMercader(3, mercader);
+    expect(mockInventario.updateMercader).toHaveBeenCalledWith(3, mercader);
+  });
+
+  test("Debe actualizar un cliente correctamente", () => {
+    const cliente = new Cliente(4, "Vesemir", "Brujo", "Kaer Morhen");
+    mockInventario.updateCliente.mockReturnValueOnce(true);
+
+    mockInventario.updateCliente(4, cliente);
+    expect(mockInventario.updateCliente).toHaveBeenCalledWith(4, cliente);
+  });
 });

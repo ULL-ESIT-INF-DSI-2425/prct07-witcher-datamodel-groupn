@@ -1,22 +1,6 @@
 {
   "bienes": [
     {
-      "id": 2,
-      "nombre": "Espada de Acero de Zireael",
-      "descripcion": "Rápida y letal, ideal contra humanos",
-      "material": "Acero de Mahakam",
-      "peso": 3,
-      "valor": 750
-    },
-    {
-      "id": 3,
-      "nombre": "Elixir de Golondrina",
-      "descripcion": "Recupera vitalidad rápidamente",
-      "material": "Ingredientes alquímicos",
-      "peso": 1,
-      "valor": 150
-    },
-    {
       "id": 5,
       "nombre": "Armadura de la Escuela del Oso",
       "descripcion": "Armadura pesada para brujos resistentes",
@@ -265,21 +249,23 @@
       "valor": 450
     },
     {
-      "id": 1,
-      "nombre": "Espada de Plata",
-      "descripcion": "Forjada en Kaer Morhen",
-      "material": "Acero de Mahakam",
-      "peso": 2.5,
-      "valor": 1000
+      "id": 2,
+      "nombre": "Poción de Golondrina",
+      "descripcion": "Recupera vitalidad",
+      "material": "Ingredientes alquímicos",
+      "peso": 1,
+      "valor": 150
+    },
+    {
+      "id": 4,
+      "nombre": "Armadura de Grifo",
+      "descripcion": "Robusta y resistente",
+      "material": "Cuero endurecido",
+      "peso": 5,
+      "valor": 1200
     }
   ],
   "mercaderes": [
-    {
-      "id": 1,
-      "nombre": "Hattori",
-      "tipo": "Herrero",
-      "ubicacion": "Novigrado"
-    },
     {
       "id": 2,
       "nombre": "Fergus Graem",
@@ -342,12 +328,6 @@
     }
   ],
   "clientes": [
-    {
-      "id": 1,
-      "nombre": "Geralt de Rivia",
-      "raza": "Brujo",
-      "ubicacion": "Kaer Morhen"
-    },
     {
       "id": 2,
       "nombre": "Jaskier",
@@ -527,116 +507,11 @@
       "id": 1,
       "tipo": "compra",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:02:47.658Z",
+      "fecha": "2025-03-22T12:40:28.468Z",
       "bien": {
         "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:03:54.914Z",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:05:03.807Z",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "23",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "23",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:15:19.418Z",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:15:23.360Z",
-      "bien": {
-        "id": 5,
-        "nombre": "Mutágeno verde",
-        "descripcion": "Un mutágeno usado en alquimia",
-        "material": "Esencia mágica",
-        "peso": 0.2,
-        "valor": 500
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:20:30.695Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vtestalidad",
+        "nombre": "Poción de Trueno",
+        "descripcion": "Aumenta la fuerza",
         "material": "Ingredientes alquímicos",
         "peso": 0.5,
         "valor": 200
@@ -647,27 +522,27 @@
       "id": 2,
       "tipo": "devolucion",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:20:30.698Z",
+      "fecha": "2025-03-22T12:40:28.470Z",
       "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
+        "id": 6,
+        "nombre": "Aceite contra espectros",
+        "descripcion": "Efectivo contra espectros",
         "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
+        "peso": 0.3,
+        "valor": 50
       },
-      "valor": 150,
+      "valor": 50,
       "devolucion": "Cliente"
     },
     {
       "id": 1,
       "tipo": "compra",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:22:28.766Z",
+      "fecha": "2025-03-22T12:44:18.714Z",
       "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vtestalidad",
+        "id": 5,
+        "nombre": "Poción de Trueno",
+        "descripcion": "Aumenta la fuerza",
         "material": "Ingredientes alquímicos",
         "peso": 0.5,
         "valor": 200
@@ -678,27 +553,27 @@
       "id": 2,
       "tipo": "devolucion",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:22:28.768Z",
+      "fecha": "2025-03-22T12:44:18.717Z",
       "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
+        "id": 6,
+        "nombre": "Aceite contra espectros",
+        "descripcion": "Efectivo contra espectros",
         "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
+        "peso": 0.3,
+        "valor": 50
       },
-      "valor": 150,
+      "valor": 50,
       "devolucion": "Cliente"
     },
     {
       "id": 1,
       "tipo": "compra",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:23:46.588Z",
+      "fecha": "2025-03-22T12:46:14.140Z",
       "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vtestalidad",
+        "id": 5,
+        "nombre": "Poción de Trueno",
+        "descripcion": "Aumenta la fuerza",
         "material": "Ingredientes alquímicos",
         "peso": 0.5,
         "valor": 200
@@ -709,831 +584,17 @@
       "id": 2,
       "tipo": "devolucion",
       "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:23:46.591Z",
+      "fecha": "2025-03-22T12:46:14.142Z",
       "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
+        "id": 6,
+        "nombre": "Aceite contra espectros",
+        "descripcion": "Efectivo contra espectros",
         "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
+        "peso": 0.3,
+        "valor": 50
       },
-      "valor": 150,
+      "valor": 50,
       "devolucion": "Cliente"
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:23:57.373Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vtestalidad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 200
-      },
-      "valor": 200
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:23:57.375Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:29:44.787Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:29:44.790Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:39:44.008Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:39:44.010Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:40:57.235Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:40:57.237Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permteste ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:43:59.399Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:43:59.402Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:43:59.410Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:46:26.285Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:46:26.289Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:46:26.306Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:53:06.028Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:53:06.031Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:53:06.045Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:55:51.249Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:55:51.251Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:55:51.264Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:56:35.259Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:56:35.262Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:56:35.278Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:58:44.971Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:58:44.974Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T11:58:44.986Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:03.770Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:03.772Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:03.784Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:11.922Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:11.925Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:00:11.935Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:30.615Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:30.617Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:30.629Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:34.688Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:34.691Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:04:34.705Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:05:35.484Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:05:35.487Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:05:35.501Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:07:35.403Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:07:35.406Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:07:35.421Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:11:10.830Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:11:10.833Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:11:10.846Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:12:59.190Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:12:59.193Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:12:59.207Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
-    },
-    {
-      "id": 1,
-      "tipo": "compra",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:14:36.336Z",
-      "bien": {
-        "id": 2,
-        "nombre": "Poción de Golondrina",
-        "descripcion": "Recupera vitalidad rápidamente",
-        "material": "Ingredientes alquímicos",
-        "peso": 1,
-        "valor": 150
-      },
-      "valor": 150
-    },
-    {
-      "id": 2,
-      "tipo": "devolucion",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:14:36.339Z",
-      "bien": {
-        "id": 3,
-        "nombre": "Poción de Gato",
-        "descripcion": "Permite ver en la oscuridad",
-        "material": "Ingredientes alquímicos",
-        "peso": 0.5,
-        "valor": 150
-      },
-      "valor": 150,
-      "devolucion": "Cliente"
-    },
-    {
-      "id": 3,
-      "tipo": "venta",
-      "idInvolucrado": 1,
-      "fecha": "2025-03-22T12:14:36.353Z",
-      "bien": {
-        "id": 999,
-        "nombre": "Bien Fantasma",
-        "descripcion": "No existe",
-        "material": "Nada",
-        "peso": 0,
-        "valor": 0
-      },
-      "valor": 500
     }
   ]
 }
