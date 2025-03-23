@@ -33,6 +33,36 @@ describe("estadoDB", () => {
         };
         expect(inventario.estadoDB()).toBe(false);
     });
+    test("debería retornar false si la base de datos no está bien estructurada", () => {
+        db.data = {
+            bienes: [],
+            clientes: [{id: "29", nombre: "nombre", raza: "raza", ubicacion: "ubi"}],
+            mercaderes: [],
+            transacciones: [],
+        };
+        expect(inventario.estadoDB()).toBe(false);
+    });
+    test("debería retornar false si la base de datos no está bien estructurada", () => {
+        db.data = {
+            bienes: [],
+            clientes: [],
+            mercaderes: [{id: "12", nombre: "nombre", tipo: "tipo", ubicacion: "ubicacion"}],
+            transacciones: [],
+        };
+        expect(inventario.estadoDB()).toBe(false);
+    });
+
+    test("debería retornar false si la base de datos no está bien estructurada", () => {
+        let bienTest: Bien = { id: 21, nombre: "Espada de Plata de Kaer Morhen", descripcion: "Una reliquia forjada en la fortaleza bruja", material: "Acero de Mahakam", peso: 3, valor: 800 }
+
+        db.data = {
+            bienes: [],
+            clientes: [],
+            mercaderes: [],
+            transacciones: [{id: "12", tipo: "venta", idInvolucrado: 4, fecha: "12/12/2009", bien: bienTest, valor: 200}],
+        };
+        expect(inventario.estadoDB()).toBe(false);
+    });
 });
 
 describe("validarBien", () => {
@@ -82,6 +112,11 @@ describe("validarTransaccion", () => {
         const bien = new Bien(1, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", "1", 150);
         const transaccion = new Transaccion(1, "compra", 1, new Date().toISOString(), bien, 150);
         expect(inventario.validarTransaccion(transaccion as Transaccion)).toBe(false);
+    });
+    test("debería retornar true si la transacción es válida", () => {
+        const bien = new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
+        const transaccion = new TransaccionDevolucion(1, "devolucion", 1, new Date().toISOString(), bien, 150, "Cliente");
+        expect(inventario.validarTransaccion(transaccion)).toBe(true);
     });
 });
 
@@ -139,6 +174,14 @@ describe("addBien", () => {
         expect(db.data?.bienes).toContainEqual(bien);
     });
 
+    test("peso notnumber", () => {
+        const bien1= new Bien(2, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800);
+        const bien2 = new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", "3", 800);
+        inventario.addBien(bien1);
+        inventario.addBien(bien2)
+        expect(db.data?.bienes.length).toBe(2);
+    });
+
     test("no debería agregar un bien si el ID no es único", () => {
         const bien1 = new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800);
         const bien2 = new Bien(1, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
@@ -167,6 +210,14 @@ describe("addMercader", () => {
         const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
         inventario.addMercader(mercader);
         expect(db.data?.mercaderes).toContainEqual(mercader);
+    });
+
+    test("id notnumber", () => {
+        const merc1 = new Mercader(4, "Hattori", "Herrero", "Novigrado");
+        const merc2 = new Mercader("7", "Hattori", "Herrero", "Novigrado");
+        inventario.addMercader(merc1);
+        inventario.addMercader(merc2);
+        expect(db.data?.mercaderes.length).toBe(2);
     });
 
     test("no debería agregar un mercader si el ID no es único", () => {
