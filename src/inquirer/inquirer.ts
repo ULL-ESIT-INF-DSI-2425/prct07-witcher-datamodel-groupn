@@ -827,6 +827,7 @@ export async function obtenerDatosVenta(){
  * Función que obtiene los datos de una compra de un bien
  * @returns Datos de la compra de un bien o 'undefined' si no existe.
  */
+/* istanbul ignore next */
 export async function obtenerDatosCompra(){
 
     const { idMercader, fecha } = await inquirer.prompt([
@@ -949,6 +950,7 @@ export async function informeStockBien(){
 /**
  * Función para la obtención de un informe con el historial de transacciones de un mercader o cliente en específico
  */
+/* istanbul ignore next */
 export async function informeHistorial(){
     while (true) {
         const { opcion } = await inquirer.prompt([
