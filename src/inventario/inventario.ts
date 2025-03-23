@@ -4,6 +4,8 @@ import { Bien } from "../elements/Bien.js";
 import { Mercader } from "../elements/Mercader.js";
 import { Cliente } from "../elements/Cliente.js";
 import { Transaccion, TransaccionDevolucion } from "../elements/Transaccion.js";
+import { Console } from "console";
+import { transaccionDevolucion } from "../inquirer/inquirer.js";
 
 /**
  * Clase Inventario que contiene los métodos para interactuar con la base de datos
@@ -572,17 +574,17 @@ export class Inventario {
             }
         } else if(transaccion.tipo === "devolucion") {
             
-            
-            if (transaccion instanceof TransaccionDevolucion){
 
+            if ("devolucion" in transaccion){
                 let existe: Cliente | Mercader | null = null;
 
                 if (transaccion.devolucion === "Cliente") {
                     existe = this.getClientePorId(transaccion.idInvolucrado);
+                    
                 } else if (transaccion.devolucion === "Mercader") {
                     existe = this.getMercaderPorId(transaccion.idInvolucrado);
                 }
-
+                
                 if (existe) {
                     db.data?.transacciones.push(transaccion);
                     db.write();
@@ -611,12 +613,15 @@ export class Inventario {
 
         // let ultimoId = db.data?.bienes.length;
         let ultimoId = 0;
+        if (db.data?.bienes.length === 0) {
+            return 1;
+        }
         db.data?.bienes.forEach((bien) => {
             if (bien.id > ultimoId) {
                 ultimoId = bien.id;
             }
         });
-        if (ultimoId === 0 || ultimoId === undefined) {
+        if (ultimoId === undefined) {
             const nextId = 1;
             return nextId;
         }  else {

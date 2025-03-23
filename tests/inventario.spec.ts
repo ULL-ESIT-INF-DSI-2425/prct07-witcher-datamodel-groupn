@@ -320,6 +320,8 @@ describe("updateCliente", () => {
         inventario.updateCliente(1, { nombre: "Geralt de Rivia" });
         expect(db.data?.clientes.length).toBe(0);
     });
+
+    
 });
 
 describe("removeBien", () => {
@@ -421,21 +423,24 @@ describe("addTransaccion", () => {
         expect(db.data?.transacciones.length).toBe(0);
     });
 
-    // test("debería agregar una transacción de devolución si el cliente existe", () => {
-    //     const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
-    //     db.data?.clientes.push(cliente);
-    //     const transaccion: TransaccionDevolucion = {
-    //         id: 1,
-    //         tipo: "devolucion",
-    //         idInvolucrado: 1,
-    //         fecha: "20/03/2025",
-    //         bien: { id: 1, nombre: "Espada de Plata de Kaer Morhen", descripcion: "Una reliquia forjada en la fortaleza bruja", material: "Acero de Mahakam", peso: 3, valor: 800 },
-    //         valor: 800,
-    //         devolucion: "Cliente",
-    //     };
-    //     expect(inventario.addTransaccion(transaccion)).toBe(true);
-    //     expect(db.data?.transacciones).toContainEqual(transaccion);
-    // });
+    test("debería agregar una transacción de devolución si el cliente existe", () => {
+        const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
+        inventario.addCliente(cliente);
+        expect(inventario.getClientePorId(1)).toBe(cliente);
+        // db.data?.clientes.push(cliente);
+        const transaccion: TransaccionDevolucion = {
+            id: 1,
+            tipo: "devolucion",
+            idInvolucrado: 1,
+            fecha: "20/03/2025",
+            bien: { id: 1, nombre: "Espada de Plata de Kaer Morhen", descripcion: "Una reliquia forjada en la fortaleza bruja", material: "Acero de Mahakam", peso: 3, valor: 800 },
+            valor: 800,
+            devolucion: "Cliente",
+        };
+        // inventario.addTransaccion(transaccion);
+        expect(inventario.addTransaccion(transaccion)).toBe(true);
+        expect(db.data?.transacciones).toContainEqual(transaccion);
+    });
 
     test("no debería agregar una transacción de devolución si el cliente no existe", () => {
         const transaccion: TransaccionDevolucion = {
@@ -452,53 +457,57 @@ describe("addTransaccion", () => {
     });
 });
 
-// describe("ultimoIdBien()", () => {
-//     test("debería devolver el último ID de los bienes", () => {
-//         const bien1 = new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800);
-//         inventario.addBien(bien1);
-//         const bien2 = new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
-//         inventario.addBien(bien2);
+describe("ultimoIdBien()", () => {
+    test("debería devolver el último ID de los bienes más uno para poder realizar el autoincremento de los IDs", () => {
+        const bien1 = new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800);
+        inventario.addBien(bien1);
+        const bien2 = new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150);
+        inventario.addBien(bien2);
 
-//         const ultimoId = inventario.ultimoIdBien();
-//         expect(ultimoId).toBe(2);
-//     });
-  
-//     test("ultimoIdBien() debería devolver 0 si no hay bienes", () => {
-//         const ultimoId = inventario.ultimoIdBien();
-//         expect(ultimoId).toBe(0);
-//     });
-// });
+        const ultimoId = inventario.ultimoIdBien();
+        expect(ultimoId).toBe(3);
+    });
 
-// describe("idTransaccion()", () => {
-//     test("debería devolver el último ID de las transacciones", () => {
-//         const transaccion1: Transaccion = {
-//             id: 1,
-//             tipo: "venta",
-//             idInvolucrado: 1,
-//             fecha: "20/03/2025",
-//             bien: new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800),
-//             valor: 800,
-//         };
-//         inventario.addTransaccion(transaccion1);
-    
-//         const transaccion2: Transaccion = {
-//             id: 2,
-//             tipo: "compra",
-//             idInvolucrado: 1,
-//             fecha: "20/03/2025",
-//             bien: new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150),
-//             valor: 150,
-//         };
-//         inventario.addTransaccion(transaccion2);
-//         const ultimoId = inventario.idTransaccion();
-//         expect(ultimoId).toBe(2);
-//     });
   
-//     test("debería devolver 0 si no hay transacciones", () => {
-//         const ultimoId = inventario.idTransaccion();
-//         expect(ultimoId).toBe(0);
-//     });
-// });
+    test("ultimoIdBien() debería devolver 1 si no hay bienes", () => {
+        const ultimoId = inventario.ultimoIdBien();
+        expect(ultimoId).toBe(1);
+    });
+});
+
+describe("idTransaccion()", () => {
+    test("debería devolver el último ID de las transacciones más uno para poder realizar el autoincremento de los IDs", () => {
+        const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
+        inventario.addCliente(cliente);
+        const transaccion1: Transaccion = {
+            id: 1,
+            tipo: "venta",
+            idInvolucrado: 1,
+            fecha: "20/03/2025",
+            bien: new Bien(1, "Espada de Plata", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800),
+            valor: 800,
+        };
+        inventario.addTransaccion(transaccion1);
+        const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
+        inventario.addMercader(mercader);
+        const transaccion2: Transaccion = {
+            id: 2,
+            tipo: "compra",
+            idInvolucrado: 1,
+            fecha: "20/03/2025",
+            bien: new Bien(2, "Poción de Golondrina", "Recupera vitalidad", "Ingredientes alquímicos", 1, 150),
+            valor: 150,
+        };
+        inventario.addTransaccion(transaccion2);
+        const ultimoId = inventario.idTransaccion();
+        expect(ultimoId).toBe(3);
+    });
+  
+    test("debería devolver 1 si no hay transacciones", () => {
+        const ultimoId = inventario.idTransaccion();
+        expect(ultimoId).toBe(1);
+    });
+});
 
 describe("informeIngresosGastos", () => {
     test("debería retornar el total de ingresos y gastos", () => {
