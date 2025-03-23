@@ -234,11 +234,11 @@ describe("getMercaderesPorTipo", () => {
     test("debería retornar el mercader con el tipo especificado", () => {
         const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
         db.data?.mercaderes.push(mercader);
-        expect(inventario.getMercaderesPorTipo("Herrero")).toEqual(mercader);
+        expect(inventario.getMercaderesPorTipo("Herrero")).toEqual([mercader]);
     });
 
-    test("debería retornar null si no se encuentra el mercader", () => {
-        expect(inventario.getMercaderesPorTipo("Herrero")).toBeNull();
+    test("debería retornar un array vacío si no se encuentra el mercader", () => {
+        expect(inventario.getMercaderesPorTipo("Herrero")).toEqual([]);
     });
 });
 
@@ -246,11 +246,11 @@ describe("getMercaderesPorUbicacion", () => {
     test("debería retornar el mercader con el ubicación especificada", () => {
         const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
         db.data?.mercaderes.push(mercader);
-        expect(inventario.getMercaderesPorUbicacion("Novigrado")).toEqual(mercader);
+        expect(inventario.getMercaderesPorUbicacion("Novigrado")).toEqual([mercader]);
     });
 
-    test("debería retornar null si no se encuentra el mercader", () => {
-        expect(inventario.getMercaderesPorUbicacion("Novigrado")).toBeNull();
+    test("debería retornar un array vacío si no se encuentra el mercader", () => {
+        expect(inventario.getMercaderesPorUbicacion("Novigrado")).toEqual([]);
     });
 });
 
@@ -299,12 +299,12 @@ describe("getClientesPorRaza", () => {
         const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
         db.data?.clientes.push(cliente);
         inventario.getClientesPorRaza("Brujo");
-        expect(inventario.getClientesPorRaza("Brujo")).toEqual(cliente);
+        expect(inventario.getClientesPorRaza("Brujo")).toEqual([cliente]);
     });
 
-    test("debería retornar null si no se encuentra el cliente", () => {
+    test("debería retornar un array vacío si no se encuentra el cliente", () => {
         inventario.getClientesPorRaza("Brujo");
-        expect(inventario.getClientesPorRaza("Brujo")).toBeNull();
+        expect(inventario.getClientesPorRaza("Brujo")).toEqual([]);
     });
 });
 
@@ -313,12 +313,12 @@ describe("getClientesPorUbicacion", () => {
         const cliente = new Cliente(1, "Geralt de Rivia", "Brujo", "Kaer Morhen");
         db.data?.clientes.push(cliente);
         inventario.getClientesPorUbicacion("Kaer Morhen");
-        expect(inventario.getClientesPorUbicacion("Kaer Morhen")).toEqual(cliente);
+        expect(inventario.getClientesPorUbicacion("Kaer Morhen")).toEqual([cliente]);
     });
 
-    test("debería retornar null si no se encuentra el cliente", () => {
+    test("debería retornar un array vacío si no se encuentra el cliente", () => {
         inventario.getClientesPorUbicacion("Kaer Morhen");
-        expect(inventario.getClientesPorUbicacion("Kaer Morhen")).toBeNull();
+        expect(inventario.getClientesPorUbicacion("Kaer Morhen")).toEqual([]);
     });
 });
 
