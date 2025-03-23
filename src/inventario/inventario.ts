@@ -264,7 +264,7 @@ export class Inventario {
      */
     getMercaderesPorTipo(tipo: string) {
         db.read();
-        const mercaderes = db.data?.mercaderes.find((b: Mercader) => b.tipo === tipo);
+        const mercaderes = db.data?.mercaderes.filter((b: Mercader) => b.tipo === tipo);
         if (mercaderes) {
             return mercaderes;
         } else {
@@ -280,7 +280,7 @@ export class Inventario {
      */
     getMercaderesPorUbicacion(ubicacion: string) {
         db.read();
-        const mercaderes = db.data?.mercaderes.find((b: Mercader) => b.ubicacion === ubicacion);
+        const mercaderes = db.data?.mercaderes.filter((b: Mercader) => b.ubicacion === ubicacion);
         if (mercaderes) {
             return mercaderes;
         } else {
@@ -410,7 +410,7 @@ export class Inventario {
      */
     getClientesPorRaza(raza: string) {
         db.read();
-        const clientes = db.data?.clientes.find((b: Cliente) => b.raza === raza);
+        const clientes = db.data?.clientes.filter((b: Cliente) => b.raza === raza);
         if (clientes) {
             return clientes;
         } else {
@@ -426,7 +426,7 @@ export class Inventario {
      */
     getClientesPorUbicacion(ubicacion: string) {
         db.read();
-        const clientes = db.data?.clientes.find((b: Cliente) => b.ubicacion === ubicacion);
+        const clientes = db.data?.clientes.filter((b: Cliente) => b.ubicacion === ubicacion);
         if (clientes) {
             return clientes;
         } else {
