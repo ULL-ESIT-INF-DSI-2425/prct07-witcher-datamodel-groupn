@@ -455,6 +455,39 @@ describe("addTransaccion", () => {
         expect(inventario.addTransaccion(transaccion)).toBe(false);
         expect(db.data?.transacciones.length).toBe(0);
     });
+
+    test("debería agregar una transacción de devolución si el mercader existe", () => {
+        const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
+        inventario.addMercader(mercader);
+        expect(inventario.getMercaderPorId(1)).toBe(mercader);
+        const transaccion: TransaccionDevolucion = {
+            id: 1,
+            tipo: "devolucion",
+            idInvolucrado: 1,
+            fecha: "20/03/2025",
+            bien: { id: 1, nombre: "Espada de Plata de Kaer Morhen", descripcion: "Una reliquia forjada en la fortaleza bruja", material: "Acero de Mahakam", peso: 3, valor: 800 },
+            valor: 800,
+            devolucion: "Mercader",
+        };
+
+        expect(inventario.addTransaccion(transaccion)).toBe(true);
+        expect(db.data?.transacciones).toContainEqual(transaccion);
+    });
+
+    test("no debería agregar una transacción de devolución si el mercader existe", () => {
+        const transaccion: TransaccionDevolucion = {
+            id: 1,
+            tipo: "devolucion",
+            idInvolucrado: 1,
+            fecha: "20/03/2025",
+            bien: { id: 1, nombre: "Espada de Plata de Kaer Morhen", descripcion: "Una reliquia forjada en la fortaleza bruja", material: "Acero de Mahakam", peso: 3, valor: 800 },
+            valor: 800,
+            devolucion: "Mercader",
+        };
+
+        expect(inventario.addTransaccion(transaccion)).toBe(false);
+        expect(db.data?.transacciones.length).toBe(0);
+    });
 });
 
 describe("ultimoIdBien()", () => {
