@@ -148,6 +148,20 @@ describe("addBien", () => {
     });
 });
 
+describe("updateBien", () => {
+    test("debería actualizar los datos de un bien existente", () => {
+        const bien = new Bien(1, "Espada", "Arma de plata para monstruos", "Acero de Mahakam", 3, 800);
+        db.data?.bienes.push(bien);
+        inventario.updateBien(1, { nombre: "Espada de Plata" });
+        expect(db.data?.bienes[0].nombre).toBe("Espada de Plata");
+    });
+
+    test("no debería actualizar si el bien no existe", () => {
+        inventario.updateBien(1, { nombre: "Espada de Plata" });
+        expect(db.data?.bienes.length).toBe(0);
+    });
+});
+
 describe("addMercader", () => {
     test("debería agregar un mercader a la base de datos", () => {
         const mercader = new Mercader(1, "Hattori", "Herrero", "Novigrado");
